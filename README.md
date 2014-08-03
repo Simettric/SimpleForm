@@ -38,7 +38,7 @@ SimpleForm
 
     <?php echo $form["firstName"] ?>
     
-    Results in:
+    Results as:
     
     <div>
       
@@ -47,4 +47,24 @@ SimpleForm
       <span class="error">Error message</span>
     
     </div>
+    
+    
+    You can draw each html tag
+    
+    <?php echo $form["firstName"]->getLabelTag() ?>
+    
+    <?php echo $form["firstName"]->getInputTag(array("class"=>"the attribute value")) ?>
+    
+    <?php echo $form["firstName"]->getErrorTag() ?>
+    
+    
+    Also, you can get an array of error values
+    
+    <?php foreach( $form["firstName"]->getErrorArray() as $error ){} ?>
+    
+    
+    
+    
+    
+    
     
