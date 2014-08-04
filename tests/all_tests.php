@@ -17,7 +17,7 @@ require_once( __DIR__ . '/classes/SomeTestField.php');
 class AllTests extends TestSuite {
     function AllTests() {
         $this->TestSuite('All tests');
-        $this->addFile('TestFormBuilder.php');
-        $this->addFile('TestForm.php');
+        $this->addFile(__DIR__ . '/TestFormBuilder.php');
+        $this->addFile(__DIR__ . '/TestForm.php');
     }
 }
