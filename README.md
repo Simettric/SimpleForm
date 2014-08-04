@@ -1,6 +1,6 @@
 SimpleForm
 ==========
-
+[![Build Status](https://travis-ci.org/asiermarques/SimpleForm.svg?branch=master)](https://travis-ci.org/asiermarques/SimpleForm)
 
 
 
