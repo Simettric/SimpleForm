@@ -16,5 +16,8 @@
     "require-dev": {
         "simpletest/simpletest": "dev-master"
     },
+    "autoload": {
+        "psr-0": { "SimpleForm": "src/" }
+    },
     "minimum-stability": "dev"
 }
