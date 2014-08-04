@@ -1,0 +1,20 @@
+{
+    "name": "simettric/simple-form",
+    "description": "",
+    "keywords": ["library", "forms"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Asier Marqus",
+            "email": "asiermarques@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/validator": "2.6.*@dev"
+    },
+    "require-dev": {
+        "simpletest/simpletest": "dev-master"
+    },
+    "minimum-stability": "dev"
+}
