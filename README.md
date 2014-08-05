@@ -36,7 +36,7 @@ SimpleForm
 #### Creating a Form class
 
 
-    class MessageForm extends Form{
+    class MessageForm extends AbstractForm{
 
         function configure(){
 

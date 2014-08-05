@@ -49,7 +49,7 @@ class FormBuilder {
             $this->_form      = new Form($values, $this);
             $this->_form->setName($form);
 
-        }else if($form instanceof Form){
+        }else if($form instanceof AbstractForm){
 
             $this->_form      = $form;
             $this->_form_name = $form->getName();
