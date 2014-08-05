@@ -11,6 +11,13 @@ namespace SimpleForm;
 
 use SimpleForm\Exception\FieldNotConfiguredException;
 use SimpleForm\Field\AbstractField;
+use Symfony\Component\Config\Definition\Builder\ValidationBuilder;
+use Symfony\Component\Translation\Translator;
+use Symfony\Component\Validator\ConstraintValidatorFactory;
+use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Context\ExecutionContextFactory;
+use Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory;
+use Symfony\Component\Validator\Validator;
 
 class Form implements \Iterator, \ArrayAccess {
 
@@ -28,6 +35,11 @@ class Form implements \Iterator, \ArrayAccess {
      */
     protected $_builder;
 
+    /**
+     * @var \Symfony\Component\Validator\Context\ExecutionContext
+     */
+    protected $_validator_context;
+
 
     /**
      * @param array|stdClass $data
@@ -35,8 +47,13 @@ class Form implements \Iterator, \ArrayAccess {
      */
     function __construct($data, FormBuilder $builder){
 
-        $this->_data    = (array) $data;
-        $this->_builder = $builder;
+        $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
+        $this->_builder   = $builder;
+
+        $translator = new Translator(WPLANG?:"en_US");
+        $this->_validator_context = new ExecutionContext(new Validator\RecursiveValidator( new ExecutionContextFactory($translator), new LazyLoadingMetadataFactory(), new ConstraintValidatorFactory()), "root", $translator);
+
+
         $this->configure();
 
 
@@ -80,14 +97,17 @@ class Form implements \Iterator, \ArrayAccess {
     function getValues(){
         $values = array();
         foreach($this->_fields as $key=>$field){
-            $values[] = $field->getValue();
+            $values[$key] = $field->getValue();
         }
         return $values;
     }
 
     function bind(array $array){
+
+
+
         foreach($array as $key=>$value){
-            if(!$this->offsetGet($key)->bind($value)){
+            if(!$this->offsetGet($key)->bind($value, $this->_validator_context)){
                 $this->_has_errors = true;
             }
         }

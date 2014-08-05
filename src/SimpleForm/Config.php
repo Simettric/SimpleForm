@@ -16,9 +16,9 @@ class Config {
     private $_definitions = array();
 
     function __construct(){
-        $this->addFieldDefinition("text", "\\SimpleForm\\\Field\\\InputTypeField");
-        $this->addFieldDefinition("input", "\\SimpleForm\\\Field\\\InputTypeField");
-        $this->addFieldDefinition("textarea", "\\SimpleForm\\\Field\\\TextareaField");
+        $this->addFieldDefinition("text", "\\SimpleForm\\Field\\InputTypeField");
+        $this->addFieldDefinition("input", "\\SimpleForm\\Field\\\InputTypeField");
+        $this->addFieldDefinition("textarea", "\\SimpleForm\\Field\\TextareaField");
     }
 
     function addFieldDefinition($name, $class_name){

@@ -27,7 +27,7 @@ SimpleForm
             ->add("message", "textarea", array( 
                                           "validator" => array(
                                                 new NotBlank(), 
-                                                new MinLength(4)) 
+                                                new Length(array("min"=>4))
                                         ));
     $data_array = array("firstName"=>"John");
     $form       = $builder->getForm($data_array);

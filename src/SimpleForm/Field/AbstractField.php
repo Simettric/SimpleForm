@@ -10,6 +10,9 @@ namespace SimpleForm\Field;
 
 
 use Symfony\Component\Validator\Constraints\NotNull;
+use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\ValidatorInterface;
+
 
 abstract class AbstractField {
 
@@ -101,8 +104,62 @@ abstract class AbstractField {
     }
 
 
-    function bind($value){
-        return true;
+    function bind($value, ExecutionContext $context){
+
+        $this->setValue($value);
+
+
+
+
+        /**
+         * @var $constraint \Symfony\Component\Validator\Constraint
+         */
+        foreach($this->_validators as $constraint){
+
+            $validator_class = $constraint->validatedBy();
+
+            /**
+             * @var $validator \Symfony\Component\Validator\ConstraintValidator
+             */
+            $validator =  new $validator_class();
+            $validator->initialize($context);
+            $validator->validate($value, $constraint);
+            /**
+             * @var $violation \Symfony\Component\Validator\ConstraintViolationList
+             */
+            $result = $context->getViolations();
+
+
+
+            if($result->count()){
+                /**
+                 * @var $violation \Symfony\Component\Validator\ConstraintViolation
+                 */
+
+                foreach($result as $i=>$violation){
+                    $this->_errors[] = $violation->getMessage();
+                    $result->remove($i);
+                }
+
+            }
+
+        }
+
+
+
+
+        if(count($this->_errors)){
+            $this->_html_attributes["class"] .= " error";
+        }
+
+
+
+
+
+
+
+        return !count($this->_errors);
+
     }
 
 
