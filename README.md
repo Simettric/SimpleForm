@@ -23,9 +23,9 @@ SimpleForm
             ->add("firstName")
             ->add("lastName")
             ->add("email", "email")
-            ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validator" key
+            ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validators" key
             ->add("message", "textarea", array( 
-                                          "validator" => array(
+                                          "validators" => array(
                                                 new NotBlank(), 
                                                 new Length(array("min"=>4))
                                         ));
@@ -47,9 +47,9 @@ SimpleForm
             $builder->add("firstName")
                     ->add("lastName")
                     ->add("email", "email")
-                    ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validator" key
+                    ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validators" key
                     ->add("message", "textarea", array(
-                                                  "validator" => array(
+                                                  "validators" => array(
                                                         new NotBlank(),
                                                         new MinLength(4))
                                                 ));

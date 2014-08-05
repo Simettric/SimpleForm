@@ -6,7 +6,7 @@
  * Time: 19:07
  */
 
-class SomeFormTest extends \SimpleForm\Form {
+class SomeFormTest extends \SimpleForm\AbstractForm {
 
     function configure(){
 
