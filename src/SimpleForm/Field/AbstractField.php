@@ -88,7 +88,7 @@ abstract class AbstractField {
     function getAttributes(){
         $html = " ";
         foreach($this->_html_attributes as $key=>$value){
-            $html .= " $key=\"$value\" ";
+            $html .= ' ' .  $key . '="' . $value . '"';
         }
 
 
