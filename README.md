@@ -23,7 +23,7 @@ SimpleForm
             ->add("firstName")
             ->add("lastName")
             ->add("email", "email")
-            ->add("subject", "choice", array("choices"=>array())); //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validator" key
+            ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validator" key
             ->add("message", "textarea", array( 
                                           "validator" => array(
                                                 new NotBlank(), 
@@ -47,7 +47,7 @@ SimpleForm
             $builder->add("firstName")
                     ->add("lastName")
                     ->add("email", "email")
-                    ->add("subject", "choice", array("choices"=>array())); //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validator" key
+                    ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validator" key
                     ->add("message", "textarea", array(
                                                   "validator" => array(
                                                         new NotBlank(),
@@ -74,11 +74,11 @@ SimpleForm
     }
     
     
-### Drawing Forms
+### Rendering Forms
 
     <?php echo $form["firstName"] ?>
-    
-    Results as:
+
+Outputs:
     
     <div>
       
@@ -87,9 +87,8 @@ SimpleForm
       <span class="error">Error message</span>
     
     </div>
-    
-    
-    You can draw each html tag
+
+You can render each HTML tag individually:
     
     <?php echo $form["firstName"]->getLabelTag() ?>
     
@@ -97,14 +96,6 @@ SimpleForm
     
     <?php echo $form["firstName"]->getErrorTag() ?>
     
-    
-    Also, you can get an array of error values
+Also, you can get an array of error values
     
     <?php foreach( $form["firstName"]->getErrorArray() as $error ){} ?>
-    
-    
-    
-    
-    
-    
-    
