@@ -28,12 +28,16 @@ class Form implements \Iterator, \ArrayAccess {
      */
     protected $_builder;
 
+
+    /**
+     * @param array|stdClass $data
+     * @param FormBuilder $builder
+     */
     function __construct($data, FormBuilder $builder){
 
-        $this->_data    = $data;
+        $this->_data    = (array) $data;
         $this->_builder = $builder;
         $this->configure();
-
 
 
     }

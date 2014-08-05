@@ -9,12 +9,20 @@
 namespace SimpleForm\Field;
 
 
+use Symfony\Component\Validator\Constraints\NotNull;
+
 abstract class AbstractField {
 
 
     protected $_errors     = array();
     protected $_options    = array();
     protected $_validators = array();
+
+
+    protected $_html_attributes = array();
+
+
+
 
     protected $_form_name;
 
@@ -28,12 +36,61 @@ abstract class AbstractField {
         $this->_options    = $options;
         $this->_validators = $validators;
 
+        $this->_checkOptionsRequisites();
+        $this->_configureHTMLAttributes();
+    }
+
+    /**
+     * Override this method in order to check the required options
+     * @return bool
+     */
+    protected function _checkOptionsRequisites(){
+        return true;
+    }
+
+
+    protected function _configureHTMLAttributes(){
+        unset($this->_options["validators"]);
+
+        if(isset($this->_options["required"])){
+
+            if($this->_options["required"]){
+                $this->_html_attributes["required"] = "required";
+                $this->_validators[] = new NotNull();
+            }
+
+            unset($this->_options["required"]);
+
+        }else{
+            $this->_html_attributes["required"] = "required";
+            $this->_validators[] = new NotNull();
+        }
+
+        $this->_html_attributes["id"]   = $this->_form_name . "_" . $this->_name;
+        $this->_html_attributes["name"] = $this->_form_name . "[" . $this->_name . "]";
+
+        foreach($this->_options as $key=>$option){
+
+
+
+            $this->_html_attributes[$key] = $option;
+        }
+
     }
 
     function getName(){
         return $this->_name;
     }
 
+    function getAttributes(){
+        $html = " ";
+        foreach($this->_html_attributes as $key=>$value){
+            $html .= " $key=\"$value\" ";
+        }
+
+
+        return $html;
+    }
 
     function getValue(){
         return $this->_value;

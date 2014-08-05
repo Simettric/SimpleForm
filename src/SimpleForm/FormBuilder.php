@@ -62,7 +62,7 @@ class FormBuilder {
 
 
 
-    function add($name, $key, $options=array()){
+    function add($name, $key="text", $options=array()){
 
         //todo: check if a form was created
 
