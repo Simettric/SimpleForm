@@ -50,7 +50,7 @@ class Form implements \Iterator, \ArrayAccess {
         $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
         $this->_builder   = $builder;
 
-        $translator = new Translator(WPLANG?:"en_US");
+        $translator = new Translator("en_US");
         $this->_validator_context = new ExecutionContext(new Validator\RecursiveValidator( new ExecutionContextFactory($translator), new LazyLoadingMetadataFactory(), new ConstraintValidatorFactory()), "root", $translator);
 
 
