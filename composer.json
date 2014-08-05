@@ -17,7 +17,7 @@
         "simpletest/simpletest": "dev-master"
     },
     "autoload": {
-        "psr-0": { "SimpleForm": "src/" }
+        "psr-4": { "SimpleForm\\": "src/SimpleForm/" }
     },
     "minimum-stability": "dev"
 }
