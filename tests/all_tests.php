@@ -20,5 +20,6 @@ class AllTests extends TestSuite {
         $this->addFile(__DIR__ . '/TestFormBuilder.php');
         $this->addFile(__DIR__ . '/TestField.php');
         $this->addFile(__DIR__ . '/TestForm.php');
+        $this->addFile(__DIR__ . '/TestChoiceField.php');
     }
 }
