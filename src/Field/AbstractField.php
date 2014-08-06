@@ -108,6 +108,7 @@ abstract class AbstractField {
 
         $this->setValue($value);
 
+        $this->_errors = array();
 
 
 
@@ -149,6 +150,10 @@ abstract class AbstractField {
 
 
         if(count($this->_errors)){
+
+            if(!isset($this->_html_attributes["class"]))
+                $this->_html_attributes["class"] = "";
+
             $this->_html_attributes["class"] .= " error";
         }
 

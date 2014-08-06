@@ -105,6 +105,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
     function bind(array $array){
 
 
+        $this->_has_errors = false;
 
         foreach($array as $key=>$value){
             if(!$this->offsetGet($key)->bind($value, $this->_validator_context)){

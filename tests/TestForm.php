@@ -62,7 +62,6 @@ class TestForm extends UnitTestCase {
 
     function testGetFormValue() {
 
-
         $builder = $this->createFormBuilder();
 
         $form = $builder->create("test", array("need_a_value"=>"value"))->add("need_a_value", "test_field")->getForm();
@@ -72,6 +71,8 @@ class TestForm extends UnitTestCase {
 
     }
 
+
+
     function testFormClass(){
 
         $form = new SomeFormTest(array("test_field"=>"value"), $this->createFormBuilder());
@@ -79,6 +80,24 @@ class TestForm extends UnitTestCase {
         $this->assertEqual("test_form",$form->getName());
         $this->assertEqual("value",$form->getValue("test_field"));
         $this->assertEqual("value",$form["test_field"]->getValue());
+    }
+
+
+
+    function testFormIsValid(){
+
+        $builder = $this->createFormBuilder();
+
+        $form = $builder->create("test")->add("test_notblank")->getForm();
+
+        $form->bind(array("test_notblank"=>null));
+
+        $this->assertFalse($form->isValid());
+
+        $form->bind(array("test_notblank"=>"something"));
+
+        $this->assertTrue($form->isValid());
+
     }
 
 
