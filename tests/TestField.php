@@ -83,7 +83,7 @@ class TestField extends UnitTestCase {
 
     }
 
-    function testRederField(){
+    function testRenderField(){
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
 
         $field->setValue("test");
