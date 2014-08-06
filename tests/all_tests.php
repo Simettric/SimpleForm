@@ -18,6 +18,7 @@ class AllTests extends TestSuite {
     function AllTests() {
         $this->TestSuite('All tests');
         $this->addFile(__DIR__ . '/TestFormBuilder.php');
+        $this->addFile(__DIR__ . '/TestField.php');
         $this->addFile(__DIR__ . '/TestForm.php');
     }
 }

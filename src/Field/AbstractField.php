@@ -43,6 +43,17 @@ abstract class AbstractField {
         $this->_configureHTMLAttributes();
     }
 
+
+    function getOptions(){
+        return $this->_options;
+    }
+
+    function getValidators(){
+        return $this->_validators;
+    }
+
+
+
     /**
      * Override this method in order to check the required options
      * @return bool
@@ -83,6 +94,10 @@ abstract class AbstractField {
 
     function getName(){
         return $this->_name;
+    }
+
+    function getAttributesArray(){
+        return $this->_html_attributes;
     }
 
     function getAttributes(){
