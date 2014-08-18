@@ -17,9 +17,27 @@ class InputTypeField extends AbstractField {
         unset($this->_html_attributes["type"]);
     }
 
+    function __toString(){
+
+        $type = isset($this->_options["type"])? $this->_options["type"] :"text";
+
+        if($type=="checkbox" || $type=="radio"){
+
+            $label = isset($this->_options["label"]) ? $this->_options["label"] : $this->_name;
+            return '<label for="' . $this->_form_name . '_'. $this->_name .'">' . $this->getInputTag() . " " .$label . '</label>';
+
+        }
+
+        return parent::__toString();
+
+    }
+
     function getInputTag(){
 
         $type = isset($this->_options["type"])? $this->_options["type"] :"text";
+
+
+
 
         return '<input type="'. $type .'" value="' . $this->getValue() . '" ' . $this->getAttributes() . '>';
 

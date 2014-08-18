@@ -91,11 +91,19 @@ class ChoiceField extends AbstractField {
 
             foreach($this->_options["choices"] as $value=>$label){
 
+                $checked = false;
+                if($is_multiple){
+                    $values  = is_array($this->getValue()) ? $this->getValue() : array($this->getValue());
+                    $checked = (false !== in_array($value, $values));
+                }else{
+                    $checked = ($value == $this->getValue());
+                }
+
                 $html .= '<p ' . $this->getAttributes() . '><label>'.
                          '<input type="' . $type .
                          '" name="' . $name .
-                         '" ' . ($value == $this->getValue() ? 'checked' : '') .
-                         ' value="' . $value . '"/>' . $label .
+                         '" ' . ($checked ? 'checked' : '') .
+                         ' value="' . $value . '"/> ' . $label .
                          '</label></p>';
 
             }
