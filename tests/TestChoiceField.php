@@ -50,7 +50,7 @@ class TestChoiceField extends UnitTestCase {
         $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("value"=>"test_option"), "multiple"=>true, "expanded"=>true));
 
 
-        $html = '<p   required="required" id="test_form_choice"><label><input type="checkbox" name="test_form[choice][]"  value="value"/> test_option</label></p>';
+        $html = '<p   required="required" id="test_form_choice_value"><label><input type="checkbox" name="test_form[choice][]"  value="value"/> test_option</label></p>';
 
         $this->assertEqual($html, $field->getInputTag());
 
@@ -63,7 +63,7 @@ class TestChoiceField extends UnitTestCase {
         $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("value"=>"test_option"), "multiple"=>false, "expanded"=>true));
 
 
-        $html = '<p   required="required" id="test_form_choice"><label><input type="radio" name="test_form[choice]"  value="value"/> test_option</label></p>';
+        $html = '<p   required="required" id="test_form_choice_value"><label><input type="radio" name="test_form[choice]"  value="value"/> test_option</label></p>';
 
         $this->assertEqual($html, $field->getInputTag());
 
