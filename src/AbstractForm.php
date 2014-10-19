@@ -107,6 +107,10 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
 
         $this->_has_errors = false;
 
+        foreach($this->_fields as $field){
+            $field->reset();
+        }
+
         foreach($array as $key=>$value){
             if(!$this->offsetGet($key)->bind($value, $this->_validator_context)){
                 $this->_has_errors = true;
@@ -139,6 +143,22 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         return key($this->_fields) !== null;
     }
 
+
+    function getErrors(){
+
+        $errors = array();
+        if($this->_has_errors){
+            foreach($this->_fields as $field){
+
+                /**
+                 * @var $field AbstractField
+                 */
+                $errors[$field->getName()] = $field->getErrors();
+            }
+        }
+        return $errors;
+
+    }
 
 
    function offsetExists (  $offset ){

@@ -39,7 +39,7 @@ class ChoiceField extends AbstractField {
         }
 
         if(!$choice_validator){
-           $this->_validators[] = new Choice(array("choices"=>array_keys($this->_options["choices"])));
+           $this->_validators[] = new Choice(array("choices"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
         }
 
 
@@ -67,11 +67,14 @@ class ChoiceField extends AbstractField {
 
             $html = '<select ' . $this->getAttributes() . '>';
 
+
+
             foreach($this->_options["choices"] as $value=>$label){
                 $html .= '<option' . ($value == $this->getValue() ? ' selected="selected"' : '') .
                          ' value="' . $value . '">' . $label .
                          '</option>';
             }
+
 
             $html .= '</select>';
 
@@ -99,7 +102,20 @@ class ChoiceField extends AbstractField {
                     $checked = ($value == $this->getValue());
                 }
 
-                $html .= '<p ' . $this->getAttributes() . '><label>'.
+                $html_attr = $this->_html_attributes;
+                $html_attr["id"] .= ("_".$value);
+
+                if(!isset($html_attr["class"])){
+                    $html_attr["class"] = "";
+                }
+                $html_attr["class"] .= " choice-item";
+
+                $attr = " ";
+                foreach($html_attr as $key=>$_value){
+                    $attr .= ' ' .  $key . '="' . $_value . '"';
+                }
+
+                $html .= '<p ' . $attr . '><label>'.
                          '<input type="' . $type .
                          '" name="' . $name .
                          '" ' . ($checked ? 'checked' : '') .
@@ -116,6 +132,14 @@ class ChoiceField extends AbstractField {
 
 
 
+    }
+
+    function reset(){
+        if($this->_options["multiple"]){
+            $this->setValue(array());
+        }else{
+            $this->setValue(null);
+        }
     }
 
 

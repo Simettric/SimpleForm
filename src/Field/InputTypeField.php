@@ -24,6 +24,24 @@ class InputTypeField extends AbstractField {
         if($type=="checkbox" || $type=="radio"){
 
             $label = isset($this->_options["label"]) ? $this->_options["label"] : $this->_name;
+
+            $checked_value = isset($this->_options["checked_value"]) ? $this->_options["checked_value"] : '';
+            unset($this->_html_attributes["checked_value"]);
+
+
+
+            if($this->getValue()){
+
+                $this->_html_attributes["checked"] = "checked";
+
+
+            }else{
+                unset($this->_html_attributes["checked"]);
+            }
+
+            $this->setValue($checked_value);
+
+
             return '<label for="' . $this->_form_name . '_'. $this->_name .'">' . $this->getInputTag() . " " .$label . '</label>';
 
         }
