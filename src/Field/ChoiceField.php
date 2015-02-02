@@ -34,7 +34,9 @@ class ChoiceField extends AbstractField {
         foreach($this->_validators as $validator){
             if($validator instanceof Choice){
                 $choice_validator = $validator;
+
                 break;
+
             }
         }
 
@@ -42,6 +44,81 @@ class ChoiceField extends AbstractField {
            $this->_validators[] = new Choice(array("choices"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
         }
 
+
+
+    }
+
+
+    function getOptionsInputTags(){
+
+        $is_select_tag = !$this->_options["expanded"];
+        $is_multiple   = $this->_options["multiple"];
+
+        $result = array();
+
+
+        foreach(array("choices", "multiple", "expanded") as $attribute){
+            if(isset($this->_html_attributes[$attribute])){
+                unset($this->_html_attributes[$attribute]);
+            }
+        }
+
+
+        if($is_select_tag){
+
+
+
+            foreach($this->_options["choices"] as $value=>$label){
+                $result[$value] = array(
+                    "input_html" => '<option' . ($value == $this->getValue() ? ' selected="selected"' : '') . ' value="' . $value . '">' . $label .  '</option>',
+                    "label"      => $label,
+                    "value"      => $value,
+                    "id"         => null
+                );
+            }
+
+
+        }else{
+
+
+            $type = $is_multiple ? "checkbox" : "radio";
+
+            $name = $this->_html_attributes["name"];
+            unset($this->_html_attributes["name"]);
+
+            if($is_multiple){
+                $name .= "[]";
+            }
+
+
+            foreach($this->_options["choices"] as $value=>$label){
+
+                $checked = false;
+                if($is_multiple){
+                    $values  = is_array($this->getValue()) ? $this->getValue() : array($this->getValue());
+                    $checked = (false !== in_array($value, $values));
+                }else{
+                    $checked = ($value == $this->getValue());
+                }
+
+                $html_attr = $this->_html_attributes;
+                $html_attr["id"] .= ("_".$value);
+
+
+                $result[$value] =  array(
+                        "input_html" => '<input type="' . $type . '" name="' . $name . '" ' . ($checked ? 'checked' : '') . ' value="' . $value . '" id="'.$html_attr["id"].'"/> ',
+                        "label"      => $label,
+                        "value"      => $value,
+                        "id"         => $html_attr["id"]
+                    );
+
+            }
+
+
+
+        }
+
+        return $result;
 
     }
 

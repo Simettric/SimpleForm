@@ -151,7 +151,6 @@ abstract class AbstractField {
             $validator->initialize($context);
 
 
-
             $validator->validate($value, $constraint);
             /**
              * @var $violation \Symfony\Component\Validator\ConstraintViolationList
