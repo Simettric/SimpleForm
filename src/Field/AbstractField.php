@@ -12,6 +12,7 @@ namespace SimpleForm\Field;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Context\ExecutionContext;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\ValidatorInterface;
 
 
@@ -142,21 +143,27 @@ abstract class AbstractField {
          */
         foreach($this->_validators as $constraint){
 
+            if($constraint == null){
+                die("NO HAY CONSTRAIT");
+            }
+
             $validator_class = $constraint->validatedBy();
 
-            /**
-             * @var $validator \Symfony\Component\Validator\ConstraintValidator
-             */
-            $validator =  new $validator_class();
-            $validator->initialize($context);
+
+            //$validator =  new $validator_class();
+            //$validator->initialize($context);
 
 
-            $validator->validate($value, $constraint);
+            $validator = Validation::createValidator();
+
+
+            $result = $validator->validate($value, $constraint);
+            
             /**
              * @var $violation \Symfony\Component\Validator\ConstraintViolationList
-             */
-            $result = $context->getViolations();
 
+            $result = $context->getViolations();
+             */
 
 
             if($result->count()){

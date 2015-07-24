@@ -15,11 +15,20 @@ require_once( __DIR__ . '/classes/SomeTestField.php');
 
 
 class AllTests extends TestSuite {
-    function AllTests() {
-        $this->TestSuite('All tests');
+
+    function __construct() {
+        parent::__construct();
         $this->addFile(__DIR__ . '/TestFormBuilder.php');
         $this->addFile(__DIR__ . '/TestField.php');
         $this->addFile(__DIR__ . '/TestForm.php');
         $this->addFile(__DIR__ . '/TestChoiceField.php');
     }
+
+    /*function AllTests() {
+        $this->TestSuite('All tests');
+        $this->addFile(__DIR__ . '/TestFormBuilder.php');
+        $this->addFile(__DIR__ . '/TestField.php');
+        $this->addFile(__DIR__ . '/TestForm.php');
+        $this->addFile(__DIR__ . '/TestChoiceField.php');
+    }*/
 }

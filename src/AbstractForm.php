@@ -51,7 +51,12 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         $this->_builder   = $builder;
 
         $translator = new Translator("en_US");
-        $this->_validator_context = new ExecutionContext(new Validator\RecursiveValidator( new ExecutionContextFactory($translator), new LazyLoadingMetadataFactory(), new ConstraintValidatorFactory()), "root", $translator);
+        $this->_validator_context = new ExecutionContext(
+            new Validator\RecursiveValidator(
+                new ExecutionContextFactory($translator),
+                new LazyLoadingMetadataFactory(),
+                new ConstraintValidatorFactory()
+            ), "root", $translator);
 
 
         $this->configure();

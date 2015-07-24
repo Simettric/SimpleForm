@@ -100,6 +100,28 @@ class TestForm extends UnitTestCase {
 
     }
 
+    function testGetErrors(){
+
+        $builder = $this->createFormBuilder();
+
+        $form = $builder->create("test")->add("test_notblank")->getForm();
+
+        $form->bind(array("test_notblank"=>null));
+
+        $this->assertFalse($form->isValid());
+
+
+        foreach($form->getErrors() as $key=>$error){
+            $this->assertEqual($key, "test_notblank");
+            return;
+        }
+
+
+
+    }
+
+
+
 
 
 

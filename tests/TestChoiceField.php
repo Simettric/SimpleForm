@@ -99,6 +99,26 @@ class TestChoiceField extends UnitTestCase {
 
     }
 
+    function testFailedChoiceErrors(){
+
+        $config = new \SimpleForm\Config();
+        $builder = new \SimpleForm\FormBuilder($config);
+        $form = $builder->create("test")->add(
+            "test_choice",
+            "choice",
+            array( "choices"=>array(1=>"test") )
+        )->getForm();
+
+        $form->bind(array("test_choice"=>-1));
+
+        $this->assertFalse($form->isValid());
+
+        foreach($form->getErrors() as $key=>$error){
+            $this->assertEqual($key, "test_choice");
+            return;
+        }
+    }
+
 
 
 
