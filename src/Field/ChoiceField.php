@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 21:10
- */
-
 namespace SimpleForm\Field;
 
 
@@ -57,6 +50,8 @@ class ChoiceField extends AbstractField {
                 unset($this->_html_attributes[$attribute]);
             }
         }
+
+        $this->_options["only_input"] = isset($this->_options["only_input"]) ? $this->_options["only_input"] : false;
 
 
         if($is_select_tag){
@@ -115,12 +110,32 @@ class ChoiceField extends AbstractField {
                     $attr .= ' ' .  $key . '="' . $_value . '"';
                 }
 
-                $html .= '<p ' . $attr . '><label>'.
-                         '<input type="' . $type .
-                         '" name="' . $name .
-                         '" ' . ($checked ? 'checked' : '') .
-                         ' value="' . $value . '"/> ' . $label .
-                         '</label></p>';
+
+
+                if($this->_options["only_input"]){
+                    $html = '<input type="' . $type .
+                        '" name="' . $name .
+
+                        '" ' . ($checked ? 'checked' : '') .
+                        ' value="' . $value .'"' ;
+
+                    foreach($html_attr as $key=>$_value){
+                        $attr .= ' ' .  $key . '="' . $_value . '"';
+                    }
+                    $html .= $attr . '"/> ';
+
+                }else{
+
+                    $html .= '<p ' . $attr . '><label>'.
+                        '<input type="' . $type .
+                        '" name="' . $name .
+                        '" ' . ($checked ? 'checked' : '') .
+                        ' value="' . $value . '"/> ' . $label .
+                        '</label></p>';
+
+                }
+
+
 
             }
 
