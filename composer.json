@@ -14,10 +14,9 @@
         "symfony/validator": "2.6.*"
     },
     "require-dev": {
-        "simpletest/simpletest": "dev-master"
+        "simpletest/simpletest": "v1.1.7"
     },
     "autoload": {
         "psr-4": { "SimpleForm\\": "src/" }
-    },
-    "minimum-stability": "dev"
+    }
 }
