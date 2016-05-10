@@ -112,7 +112,22 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase {
         }
     }
 
+    function testChoiceValidator(){
 
+        $config = new \SimpleForm\Config();
+        $builder = new \SimpleForm\FormBuilder($config);
+        $form = $builder->create("test")->add(
+            "test_choice",
+            "choice",
+            array( "choices"=>array("audio"=>"Audio") )
+        )->getForm();
+
+        $form->bind(array("test_choice"=>"audio"));
+
+        $this->assertTrue($form->isValid());
+
+
+    }
 
 
 

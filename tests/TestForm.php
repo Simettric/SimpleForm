@@ -69,29 +69,34 @@ class TestForm extends \PHPUnit_Framework_TestCase {
 
     function testFormClass(){
 
-        $form = new SomeFormTest(array("test_field"=>"value"), $this->createFormBuilder());
+        $form = new SomeFormTest(array("test_field"=>"value", "test_choice"=>"key_test"), $this->createFormBuilder());
 
         $this->assertEquals("test_form",$form->getName());
         $this->assertEquals("value",$form->getValue("test_field"));
         $this->assertEquals("value",$form["test_field"]->getValue());
+        $this->assertEquals("key_test",$form["test_choice"]->getValue());
     }
 
 
 
     function testFormIsValid(){
 
-        $builder = $this->createFormBuilder();
+        $form = new SomeFormTest(array(), $this->createFormBuilder());
 
-        $form = $builder->create("test")->add("test_notblank")->getForm();
+        $form->bind(array("test_field"=>"value", "test_choice"=>"key_test"));
 
-        $form->bind(array("test_notblank"=>null));
+        $this->assertEquals("test_form",$form->getName());
+        $this->assertEquals("value",$form->getValue("test_field"));
+        $this->assertEquals("value",$form["test_field"]->getValue());
+        $this->assertEquals("key_test",$form["test_choice"]->getValue());
 
-        $this->assertFalse($form->isValid());
 
-        $form->bind(array("test_notblank"=>"something"));
 
         $this->assertTrue($form->isValid());
 
+        $form->bind(array("test_field"=>"value", "test_choice"=>"key_test2"));
+
+        $this->assertFalse($form->isValid());
     }
 
     function testGetErrors(){

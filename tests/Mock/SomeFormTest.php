@@ -13,7 +13,10 @@ class SomeFormTest extends \SimpleForm\AbstractForm {
 
         $this->setName("test_form");
 
-        $this->getBuilder()->add("test_field", "test_field", array());
+        $this->getBuilder()->add("test_field", "test_field", array())
+            ->add("test_choice", "choice", array(
+                "choices"=>array("key_test"=>"Test")
+            ));
 
     }
 

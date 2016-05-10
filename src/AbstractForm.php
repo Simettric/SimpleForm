@@ -11,7 +11,6 @@ namespace SimpleForm;
 
 use SimpleForm\Exception\FieldNotConfiguredException;
 use SimpleForm\Field\AbstractField;
-use Symfony\Component\Config\Definition\Builder\ValidationBuilder;
 use Symfony\Component\Translation\Translator;
 use Symfony\Component\Validator\ConstraintValidatorFactory;
 use Symfony\Component\Validator\Context\ExecutionContext;
