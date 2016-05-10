@@ -7,6 +7,7 @@ use SimpleForm\Field\AbstractField;
 use SimpleForm\Form;
 use SimpleForm\FormBuilder;
 use SimpleForm\Test\Mock\SomeFormTest;
+use SimpleForm\Test\Mock\TestChoiceForm;
 
 class TestForm extends \PHPUnit_Framework_TestCase {
 
@@ -97,6 +98,18 @@ class TestForm extends \PHPUnit_Framework_TestCase {
         $form->bind(array("test_field"=>"value", "test_choice"=>"key_test2"));
 
         $this->assertFalse($form->isValid());
+
+
+        $form2 = new TestChoiceForm(array(),$this->createFormBuilder());
+
+        $form2->bind(array("type"=>"audio"));
+
+
+        $this->assertTrue($form2->isValid());
+
+        $form2->bind(array("type"=>"fail"));
+
+        $this->assertFalse($form2->isValid());
     }
 
     function testGetErrors(){

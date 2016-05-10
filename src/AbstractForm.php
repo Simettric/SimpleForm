@@ -16,6 +16,7 @@ use Symfony\Component\Validator\ConstraintValidatorFactory;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Context\ExecutionContextFactory;
 use Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory;
+use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator;
 
 abstract class AbstractForm implements \Iterator, \ArrayAccess {
@@ -34,7 +35,10 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
      */
     protected $_builder;
 
-
+    /**
+     * @var \Symfony\Component\Validator\Context\ExecutionContext
+     */
+    protected $_validator_context;
 
 
     /**
@@ -46,7 +50,8 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
         $this->_builder   = $builder;
 
-
+        $translator = new Translator("en_US");
+        $this->_validator_context = new ExecutionContext(Validation::createValidator(), "root", new Translator("en_US"));
 
 
         $this->configure();
@@ -107,7 +112,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         }
 
         foreach($array as $key=>$value){
-            if(!$this->offsetGet($key)->bind($value)){
+            if(!$this->offsetGet($key)->bind($value, $this->_validator_context)){
                 $this->_has_errors = true;
             }
         }

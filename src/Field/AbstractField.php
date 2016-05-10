@@ -9,6 +9,7 @@
 namespace SimpleForm\Field;
 
 
+use Symfony\Component\Translation\Translator;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Context\ExecutionContext;
@@ -130,7 +131,7 @@ abstract class AbstractField {
     }
 
 
-    function bind($value){
+    function bind($value, ExecutionContext $context){
 
         $this->reset();
 
@@ -152,17 +153,19 @@ abstract class AbstractField {
 
 
 
-            $validator = Validation::createValidatorBuilder()->getValidator();
-            //$validator = Validation::createValidator();
+            $validator_class = $constraint->validatedBy();
+            $validator = new $validator_class();
+            $context->setConstraint($constraint);
+            $validator->initialize($context);
 
 
             $result = $validator->validate($value, $constraint);
             
             /**
              * @var $violation \Symfony\Component\Validator\ConstraintViolationList
-
+*/
             $result = $context->getViolations();
-             */
+
 
 
             if($result->count()){
