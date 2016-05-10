@@ -1,11 +1,7 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 5/08/14
- * Time: 18:02
+ * Created by Asier Marqués <asiermarques@gmail.com>
  */
-
 namespace SimpleForm;
 
 

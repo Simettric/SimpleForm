@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 15:24
+ * Created by Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm;
@@ -11,13 +8,6 @@ namespace SimpleForm;
 
 use SimpleForm\Exception\FieldNotConfiguredException;
 use SimpleForm\Field\AbstractField;
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Validator\ConstraintValidatorFactory;
-use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Context\ExecutionContextFactory;
-use Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator;
 
 abstract class AbstractForm implements \Iterator, \ArrayAccess {
 
@@ -36,8 +26,6 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
     protected $_builder;
 
 
-
-
     /**
      * @param array $data
      * @param FormBuilder $builder
@@ -47,9 +35,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
         $this->_builder   = $builder;
 
-
         $this->configure($builder);
-
 
     }
 
@@ -79,8 +65,6 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         }
 
         $this->_fields[$field->getName()] = $field;
-
-
 
     }
 
@@ -137,7 +121,6 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         return key($this->_fields) !== null;
     }
 
-
     function getErrors(){
 
         $errors = array();
@@ -189,8 +172,5 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
        $this->_fields[$offset] = null;
        unset($this->_fields[$offset]);
    }
-
-
-
 
 } 

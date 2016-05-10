@@ -1,13 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 15:48
+ * Created by Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Field;
-
 
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\NotEmpty;
@@ -22,9 +18,6 @@ abstract class AbstractField {
 
 
     protected $_html_attributes = array();
-
-
-
 
     protected $_form_name;
 
@@ -90,9 +83,6 @@ abstract class AbstractField {
         $this->_html_attributes["name"] = $this->_form_name . "[" . $this->_name . "]";
 
         foreach($this->_options as $key=>$option){
-
-
-
             $this->_html_attributes[$key] = $option;
         }
 
@@ -133,7 +123,6 @@ abstract class AbstractField {
 
         $this->_errors = array();
 
-
         /**
          * @var $validator AbstractValidator
          */
@@ -165,11 +154,7 @@ abstract class AbstractField {
 
             }
 
-
         }
-
-
-
 
         if(count($this->_errors)){
 
@@ -178,12 +163,6 @@ abstract class AbstractField {
 
             $this->_html_attributes["class"] .= " error";
         }
-
-
-
-
-
-
 
         return !count($this->_errors);
 
@@ -218,12 +197,9 @@ abstract class AbstractField {
             return $html;
         }
 
-
         return null;
     }
 
     abstract function  getInputTag();
-
-
 
 } 

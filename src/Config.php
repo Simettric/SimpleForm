@@ -1,15 +1,9 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 16:35
+ * Created by Asier Marqués <asiermarques@gmail.com>
  */
-
 namespace SimpleForm;
 
-
-use SimpleForm\Field\TextareaField;
 
 class Config {
 

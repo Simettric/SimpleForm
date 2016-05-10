@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 15:31
+ * Created by Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Exception;

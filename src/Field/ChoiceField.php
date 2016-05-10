@@ -1,7 +1,8 @@
 <?php
+/**
+ * Created by Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Field;
-
-
 
 use Zend\Validator\InArray;
 
@@ -54,7 +55,6 @@ class ChoiceField extends AbstractField {
 
         $this->_options["only_input"] = isset($this->_options["only_input"]) ? $this->_options["only_input"] : false;
 
-
         if($is_select_tag){
 
             if($is_multiple){
@@ -63,14 +63,11 @@ class ChoiceField extends AbstractField {
 
             $html = '<select ' . $this->getAttributes() . '>';
 
-
-
             foreach($this->_options["choices"] as $value=>$label){
                 $html .= '<option' . ($value == $this->getValue() ? ' selected="selected"' : '') .
                          ' value="' . $value . '">' . $label .
                          '</option>';
             }
-
 
             $html .= '</select>';
 
@@ -111,8 +108,6 @@ class ChoiceField extends AbstractField {
                     $attr .= ' ' .  $key . '="' . $_value . '"';
                 }
 
-
-
                 if($this->_options["only_input"]){
                     $html = '<input type="' . $type .
                         '" name="' . $name .
@@ -136,17 +131,11 @@ class ChoiceField extends AbstractField {
 
                 }
 
-
-
             }
-
-
 
         }
 
         return $html;
-
-
 
     }
 

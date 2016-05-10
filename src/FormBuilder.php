@@ -1,12 +1,10 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 16:01
+ * Created by Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm;
+
 use SimpleForm\Field\AbstractField;
 
 class FormBuilder {
@@ -38,7 +36,7 @@ class FormBuilder {
 
     /**
      * @param $form
-     * @param array|stdClass $values
+     * @param array $values
      * @return $this
      */
     function create($form, $values=array()){
