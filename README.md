@@ -4,6 +4,10 @@ SimpleForm
 
 A simple way to working with forms in php.
 
+### Install
+
+    composer require simettric/simple-form
+
 ### Configure
 ```php
 $config = new Config();
