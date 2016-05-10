@@ -27,6 +27,7 @@ $builder->create("message")
                     new NotEmpty(), 
                     new StringLength(array("min"=>4))
         ));
+        
 $data_array = array("firstName"=>"John");
 $form       = $builder->getForm($data_array);
 ```
