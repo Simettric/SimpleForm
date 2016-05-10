@@ -6,6 +6,7 @@ namespace SimpleForm\Test;
 use SimpleForm\Test\Mock\MockExecutionContext;
 use SimpleForm\Test\Mock\SomeTestField;
 use Symfony\Component\Translation\Translator;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\ConstraintValidatorFactory;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Context\ExecutionContextFactory;
@@ -14,16 +15,10 @@ use Symfony\Component\Validator\Validator\RecursiveValidator;
 
 class TestField  extends \PHPUnit_Framework_TestCase {
 
-    private $validator_context;
+
 
     function setUp(){
-        $translator = new Translator("en_US");
-        $this->validator_context = new ExecutionContext(
-            new RecursiveValidator(
-                new ExecutionContextFactory($translator),
-                new LazyLoadingMetadataFactory(),
-                new ConstraintValidatorFactory()
-            ), "root", $translator);
+
     }
 
 
@@ -68,10 +63,19 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals("whatever", $field->getValue());
 
-        $field->bind("test", $this->validator_context);
+        $field->bind("test");
 
 
         $this->assertEquals("test", $field->getValue());
+
+
+        $field = new SomeTestField("test_field", "test_form", array("required"=>true),array(
+            new NotBlank()
+        ) );
+        $field->bind("");
+
+
+        $this->assertCount(1, $field->getErrors());
 
     }
 
