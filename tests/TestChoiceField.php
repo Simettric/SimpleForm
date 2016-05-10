@@ -1,16 +1,9 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 17:52
- */
 
-require_once( __DIR__ . '/../vendor/autoload.php');
-require_once( __DIR__ . '/../vendor/simpletest/simpletest/autorun.php');
-require_once( __DIR__ . '/classes/MockExecutionContext.php');
+namespace SimpleForm\Test;
 
-class TestChoiceField extends UnitTestCase {
+
+class TestChoiceField extends \PHPUnit_Framework_TestCase {
 
 
 
@@ -26,7 +19,7 @@ class TestChoiceField extends UnitTestCase {
 
         $html = '<select   required="required" id="test_form_choice" name="test_form[choice]"><option value="value">test_option</option></select>';
 
-        $this->assertEqual($html, $field->getInputTag());
+        $this->assertEquals($html, $field->getInputTag());
 
 
     }
@@ -39,7 +32,7 @@ class TestChoiceField extends UnitTestCase {
 
         $html = '<select   required="required" id="test_form_choice" name="test_form[choice]" multiple="multiple"><option value="value">test_option</option></select>';
 
-        $this->assertEqual($html, $field->getInputTag());
+        $this->assertEquals($html, $field->getInputTag());
 
 
     }
@@ -52,7 +45,7 @@ class TestChoiceField extends UnitTestCase {
 
         $html = '<p   required="required" id="test_form_choice_value" class=" choice-item"><label><input type="checkbox" name="test_form[choice][]"  value="value"/> test_option</label></p>';
 
-        $this->assertEqual($html, $field->getInputTag());
+        $this->assertEquals($html, $field->getInputTag());
 
 
     }
@@ -65,7 +58,7 @@ class TestChoiceField extends UnitTestCase {
 
         $html = '<p   required="required" id="test_form_choice_value" class=" choice-item"><label><input type="radio" name="test_form[choice]"  value="value"/> test_option</label></p>';
 
-        $this->assertEqual($html, $field->getInputTag());
+        $this->assertEquals($html, $field->getInputTag());
 
 
     }
@@ -77,7 +70,7 @@ class TestChoiceField extends UnitTestCase {
         $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=> $choices, "multiple"=>false, "expanded"=>true));
 
 
-        $this->assertTrue(count($field->getValidators()));
+        $this->assertCount(2, $field->getValidators());
 
         $has_constraint = false;
         foreach($field->getValidators() as $constraint){
@@ -89,7 +82,7 @@ class TestChoiceField extends UnitTestCase {
         $this->assertTrue($has_constraint != false);
 
 
-        $this->assertEqual(array_keys($choices), $has_constraint->choices);
+        $this->assertEquals(array_keys($choices), $has_constraint->choices);
 
 
 
@@ -114,7 +107,7 @@ class TestChoiceField extends UnitTestCase {
         $this->assertFalse($form->isValid());
 
         foreach($form->getErrors() as $key=>$error){
-            $this->assertEqual($key, "test_choice");
+            $this->assertEquals($key, "test_choice");
             return;
         }
     }

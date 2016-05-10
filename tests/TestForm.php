@@ -1,27 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 17:52
- */
-
-ini_set("display_errors", true);
-
-require_once( __DIR__ . '/../vendor/autoload.php');
-require_once( __DIR__ . '/../vendor/simpletest/simpletest/autorun.php');
-require_once( __DIR__ . '/classes/SomeTestField.php');
-require_once( __DIR__ . '/classes/SomeFormTest.php');
+namespace SimpleForm\Test;
 
 
-class TestForm extends UnitTestCase {
+use SimpleForm\Config;
+use SimpleForm\Field\AbstractField;
+use SimpleForm\Form;
+use SimpleForm\FormBuilder;
+use SimpleForm\Test\Mock\SomeFormTest;
+
+class TestForm extends \PHPUnit_Framework_TestCase {
 
 
     function createFormBuilder(){
 
-        $config = new \SimpleForm\Config();
-        $config->addFieldDefinition("test_field", "\\SomeTestField");
-        return new \SimpleForm\FormBuilder($config);
+        $config = new Config();
+        $config->addFieldDefinition("test_field", "SimpleForm\\Test\\Mock\\SomeTestField");
+        return new FormBuilder($config);
 
     }
 
@@ -33,8 +27,8 @@ class TestForm extends UnitTestCase {
         $form = $builder->create("test")->getForm();
 
 
-        $this->assertTrue($form instanceof \SimpleForm\Form);
-        $this->assertEqual("test",$form->getName());
+        $this->assertTrue($form instanceof Form);
+        $this->assertEquals("test",$form->getName());
 
     }
 
@@ -54,7 +48,7 @@ class TestForm extends UnitTestCase {
         $form = $builder->getForm();
 
         foreach($fields as $field){
-            $this->assertTrue($form[$field] instanceof \SimpleForm\Field\AbstractField);
+            $this->assertTrue($form[$field] instanceof AbstractField);
         }
 
 
@@ -66,8 +60,8 @@ class TestForm extends UnitTestCase {
 
         $form = $builder->create("test", array("need_a_value"=>"value"))->add("need_a_value", "test_field")->getForm();
 
-        $this->assertEqual("value",$form->getValue("need_a_value"));
-        $this->assertEqual("value",$form["need_a_value"]->getValue());
+        $this->assertEquals("value",$form->getValue("need_a_value"));
+        $this->assertEquals("value",$form["need_a_value"]->getValue());
 
     }
 
@@ -77,9 +71,9 @@ class TestForm extends UnitTestCase {
 
         $form = new SomeFormTest(array("test_field"=>"value"), $this->createFormBuilder());
 
-        $this->assertEqual("test_form",$form->getName());
-        $this->assertEqual("value",$form->getValue("test_field"));
-        $this->assertEqual("value",$form["test_field"]->getValue());
+        $this->assertEquals("test_form",$form->getName());
+        $this->assertEquals("value",$form->getValue("test_field"));
+        $this->assertEquals("value",$form["test_field"]->getValue());
     }
 
 
@@ -112,7 +106,7 @@ class TestForm extends UnitTestCase {
 
 
         foreach($form->getErrors() as $key=>$error){
-            $this->assertEqual($key, "test_notblank");
+            $this->assertEquals($key, "test_notblank");
             return;
         }
 

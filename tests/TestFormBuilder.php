@@ -1,22 +1,18 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 17:52
- */
 
-require_once( __DIR__ . '/../vendor/autoload.php');
-require_once( __DIR__ . '/../vendor/simpletest/simpletest/autorun.php');
-require_once( __DIR__ . '/classes/SomeTestField.php');
+namespace SimpleForm\Test;
 
-class TestFormBuilder extends UnitTestCase {
+
+use SimpleForm\Field\AbstractField;
+use SimpleForm\Form;
+
+class TestFormBuilder extends \PHPUnit_Framework_TestCase {
 
 
     function createFormBuilder(){
 
         $config = new \SimpleForm\Config();
-        $config->addFieldDefinition("test_field", "\\SomeTestField");
+        $config->addFieldDefinition("test_field", "SimpleForm\\Test\\Mock\\SomeTestField");
         return new \SimpleForm\FormBuilder($config);
 
     }
@@ -30,8 +26,8 @@ class TestFormBuilder extends UnitTestCase {
         $form = $builder->create("test")->getForm();
 
 
-        $this->assertTrue($form instanceof \SimpleForm\Form);
-        $this->assertEqual("test",$form->getName());
+        $this->assertTrue($form instanceof Form);
+        $this->assertEquals("test",$form->getName());
 
     }
 
@@ -43,7 +39,7 @@ class TestFormBuilder extends UnitTestCase {
         $form = $builder->create("test")->add("test", "test_field")->getForm();
 
 
-        $this->assertTrue($form["test"] instanceof \SimpleForm\Field\AbstractField);
+        $this->assertTrue($form["test"] instanceof AbstractField);
 
     }
 

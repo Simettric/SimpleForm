@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 17:54
- */
 
+namespace SimpleForm\Test\Mock;
 
+use SimpleForm\Field\AbstractField;
 
-
-class SomeTestField extends SimpleForm\Field\AbstractField {
+class SomeTestField extends AbstractField {
 
 
     function getInputTag(){

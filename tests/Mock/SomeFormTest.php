@@ -5,6 +5,7 @@
  * Date: 4/08/14
  * Time: 19:07
  */
+namespace SimpleForm\Test\Mock;
 
 class SomeFormTest extends \SimpleForm\AbstractForm {
 

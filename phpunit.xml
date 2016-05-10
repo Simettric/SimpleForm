@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         bootstrap="vendor/autoload.php"
+        >
+    <testsuites>
+        <testsuite name="Simpleform">
+            <file>tests/TestField.php</file>
+            <file>tests/TestChoiceField.php</file>
+            <file>tests/TestFormBuilder.php</file>
+            <file>tests/TestForm.php</file>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+        </whitelist>
+    </filter>
+</phpunit>
