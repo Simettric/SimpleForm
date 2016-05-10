@@ -12,7 +12,7 @@ namespace SimpleForm;
 class Form  extends  AbstractForm{
 
 
-    function configure(){
+    function configure(FormBuilder $builder){
 
     }
 

@@ -9,14 +9,8 @@
 namespace SimpleForm\Field;
 
 
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\Constraints\NotNull;
-use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Tests\Fixtures\ConstraintAValidator;
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator;
-use Symfony\Component\Validator\ValidatorInterface;
+use Zend\Validator\AbstractValidator;
+use Zend\Validator\NotEmpty;
 
 
 abstract class AbstractField {
@@ -82,14 +76,14 @@ abstract class AbstractField {
 
             if($this->_options["required"]){
                 $this->_html_attributes["required"] = "required";
-                $this->_validators[] = new NotNull();
+                $this->_validators[] = new NotEmpty();
             }
 
             unset($this->_options["required"]);
 
         }else{
             $this->_html_attributes["required"] = "required";
-            $this->_validators[] = new NotNull();
+            $this->_validators[] = new NotEmpty();
         }
 
         $this->_html_attributes["id"]   = $this->_form_name . "_" . $this->_name;
@@ -131,7 +125,7 @@ abstract class AbstractField {
     }
 
 
-    function bind($value, ExecutionContext $context){
+    function bind($value){
 
         $this->reset();
 
@@ -140,45 +134,37 @@ abstract class AbstractField {
         $this->_errors = array();
 
 
-
         /**
-         * @var $constraint \Symfony\Component\Validator\Constraint
+         * @var $validator AbstractValidator
          */
-        foreach($this->_validators as $constraint){
+        foreach($this->_validators as $validator){
 
-            if($constraint == null){
-                die("NO HAY CONSTRAIT");
-            }
+            if(is_array($value)){
 
+                foreach($value as $_value){
 
+                    if(!$validator->isValid($_value)){
 
+                        foreach($validator->getMessages() as $i=>$message){
+                            $this->_errors[] = $message;
+                        }
 
-            $validator_class = $constraint->validatedBy();
-            $validator = new $validator_class();
-            $context->setConstraint($constraint);
-            $validator->initialize($context);
+                    }
 
+                }
 
-            $result = $validator->validate($value, $constraint);
-            
-            /**
-             * @var $violation \Symfony\Component\Validator\ConstraintViolationList
-*/
-            $result = $context->getViolations();
+            }else{
 
+                if(!$validator->isValid($value)){
 
+                    foreach($validator->getMessages() as $i=>$message){
+                        $this->_errors[] = $message;
+                    }
 
-            if($result->count()){
-                /**
-                 * @var $violation \Symfony\Component\Validator\ConstraintViolation
-                 */
-
-                foreach($result as $i=>$violation){
-                    $this->_errors[] = $violation->getMessage();
-                    $result->remove($i);
                 }
 
             }
+
 
         }
 

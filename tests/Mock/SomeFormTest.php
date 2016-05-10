@@ -7,9 +7,11 @@
  */
 namespace SimpleForm\Test\Mock;
 
+use SimpleForm\FormBuilder;
+
 class SomeFormTest extends \SimpleForm\AbstractForm {
 
-    function configure(){
+    function configure(FormBuilder $builder){
 
         $this->setName("test_form");
 

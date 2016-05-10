@@ -35,14 +35,11 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
      */
     protected $_builder;
 
-    /**
-     * @var \Symfony\Component\Validator\Context\ExecutionContext
-     */
-    protected $_validator_context;
+
 
 
     /**
-     * @param array|stdClass $data
+     * @param array $data
      * @param FormBuilder $builder
      */
     function __construct($data, FormBuilder $builder){
@@ -50,16 +47,13 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
         $this->_builder   = $builder;
 
-        $translator = new Translator("en_US");
-        $this->_validator_context = new ExecutionContext(Validation::createValidator(), "root", new Translator("en_US"));
 
-
-        $this->configure();
+        $this->configure($builder);
 
 
     }
 
-    abstract function configure();
+    abstract function configure(FormBuilder $builder);
 
 
     function setName($name){
@@ -112,7 +106,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
         }
 
         foreach($array as $key=>$value){
-            if(!$this->offsetGet($key)->bind($value, $this->_validator_context)){
+            if(!$this->offsetGet($key)->bind($value)){
                 $this->_has_errors = true;
             }
         }

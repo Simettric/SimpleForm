@@ -3,20 +3,15 @@
 namespace SimpleForm\Test;
 
 
-use Symfony\Component\Translation\Translator;
-use Symfony\Component\Validator\Context\ExecutionContext;
-use Symfony\Component\Validator\Validation;
+
+use Zend\Validator\InArray;
 
 class TestChoiceField extends \PHPUnit_Framework_TestCase {
 
 
 
-    private $validator_context;
-
     function setUp(){
-        $translator = new Translator("en_US");
-        $this->validator_context = new ExecutionContext(Validation::createValidator(), "root", $translator);
-    }
+        }
 
 
 
@@ -82,21 +77,21 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase {
         $this->assertCount(2, $field->getValidators());
 
         $has_constraint = false;
-        foreach($field->getValidators() as $constraint){
-            if($constraint instanceof \Symfony\Component\Validator\Constraints\Choice){
-                $has_constraint = $constraint;
+        foreach($field->getValidators() as $validator){
+            if($validator instanceof InArray){
+                $has_constraint = $validator;
                 break;
             }
         }
         $this->assertTrue($has_constraint != false);
 
 
-        $this->assertEquals(array_keys($choices), $has_constraint->choices);
+        $this->assertEquals(array_keys($choices), $has_constraint->getHaystack());
 
-        $field->bind("value", $this->validator_context);
+        $field->bind("value");
         $this->assertCount(0, $field->getErrors());
 
-        $field->bind("bad_value", $this->validator_context);
+        $field->bind("bad_value");
         $this->assertCount(1, $field->getErrors());
 
 

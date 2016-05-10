@@ -12,15 +12,11 @@ use Symfony\Component\Validator\Context\ExecutionContextFactory;
 use Symfony\Component\Validator\Mapping\Factory\LazyLoadingMetadataFactory;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
+use Zend\Validator\NotEmpty;
 
 class TestField  extends \PHPUnit_Framework_TestCase {
 
-    private $validator_context;
 
-    function setUp(){
-        $translator = new Translator("en_US");
-        $this->validator_context = new ExecutionContext(Validation::createValidator(), "root", $translator);
-    }
 
 
 
@@ -33,7 +29,7 @@ class TestField  extends \PHPUnit_Framework_TestCase {
         $validators = $field->getValidators();
 
         $this->assertTrue(isset($attributes["required"]) && $attributes["required"]=="required");
-        $this->assertTrue(false !== array_search(new \Symfony\Component\Validator\Constraints\NotNull(), $validators));
+        $this->assertTrue(false !== array_search(new NotEmpty(), $validators));
 
 
     }
@@ -64,7 +60,7 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
         $this->assertEquals("whatever", $field->getValue());
 
-        $field->bind("test", $this->validator_context);
+        $field->bind("test");
 
 
         $this->assertEquals("test", $field->getValue());

@@ -2,7 +2,8 @@
 namespace SimpleForm\Field;
 
 
-use Symfony\Component\Validator\Constraints\Choice;
+
+use Zend\Validator\InArray;
 
 class ChoiceField extends AbstractField {
 
@@ -25,14 +26,14 @@ class ChoiceField extends AbstractField {
 
         $choice_validator = null;
         foreach($this->_validators as $validator){
-            if($validator instanceof Choice){
+            if($validator instanceof InArray){
                 $choice_validator = $validator;
                 break;
             }
         }
 
         if(!$choice_validator){
-           $this->_validators[] = new Choice(array("choices"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
+           $this->_validators[] = new InArray(array("haystack"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
         }
 
 

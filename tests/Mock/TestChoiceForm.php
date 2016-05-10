@@ -9,11 +9,12 @@ namespace SimpleForm\Test\Mock;
 
 
 use SimpleForm\AbstractForm;
+use SimpleForm\FormBuilder;
 
 class TestChoiceForm extends AbstractForm{
 
 
-    function configure(){
+    function configure(FormBuilder $builder){
 
         $types     = array("image"=> "Imagen", "audio"=>"Audio");
 
