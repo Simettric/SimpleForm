@@ -2,9 +2,7 @@ SimpleForm
 ==========
 [![Build Status](https://travis-ci.org/asiermarques/SimpleForm.svg?branch=master)](https://travis-ci.org/asiermarques/SimpleForm)
 
-
-
-## MVP Concept
+A simple way to working with forms in php.
 
 ### Configure
 ```php
@@ -23,12 +21,12 @@ $builder->create("message")
         ->add("firstName")
         ->add("lastName")
         ->add("email", "email")
-        ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validators" key
-        ->add("message", "textarea", array( 
-                                      "validators" => array(
-                                            new NotBlank(), 
-                                            new Length(array("min"=>4))
-                                    ));
+        ->add("subject", "choice", array("choices"=>array())) //InArray is implicit unless we configure our own ChoiceValidator in the "validators" key
+        ->add("message", "textarea", array(
+              "validators" => array(
+                    new NotEmpty(), 
+                    new StringLength(array("min"=>4))
+        ));
 $data_array = array("firstName"=>"John");
 $form       = $builder->getForm($data_array);
 ```
@@ -37,11 +35,9 @@ $form       = $builder->getForm($data_array);
 ```php
 class MessageForm extends AbstractForm{
 
-    function configure(){
+    function configure(FormBuilder $builder){
 
         $this->name = "message";
-
-        $builder = $this->getBuilder();
 
         $builder->add("firstName")
                 ->add("lastName")
@@ -49,8 +45,8 @@ class MessageForm extends AbstractForm{
                 ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validators" key
                 ->add("message", "textarea", array(
                                               "validators" => array(
-                                                    new NotBlank(),
-                                                    new MinLength(4))
+                                                    new NotEmpty(),
+                                                    new StringLength(array("min"=>4))
                                             ));
 
     }
@@ -63,6 +59,21 @@ $form       = new MessageForm($data_array, $config);
 ```        
         
 ### Validating Forms
+
+SimpleForm uses [Zend Validator](http://framework.zend.com/manual/current/en/modules/zend.validator.html) to manage the fields validation in its forms.
+
+```php
+$builder->add("message", "textarea", array(
+              "label"      => "Write your message",
+              "validators" => array(
+                    new NotEmpty(), 
+                    new StringLength(array("min"=>4)
+              )
+));
+```  
+
+In your controller, you can bind the request data and check if the form is valid
+
 ```php
 $form->bind( $_POST["contact"] );
 
