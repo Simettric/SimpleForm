@@ -1,10 +1,10 @@
 language: php
 
 php:
-  - 5.3.3
+  - 5.3
   - 5.4
   - 5.6
   - 7
 
-before_script:  composer config -g -- disable-tls true;composer install --prefer-source
+before_script:  composer install --prefer-source
 script: php vendor/bin/phpunit --testsuite "Simpleform" -c phpunit.xml
