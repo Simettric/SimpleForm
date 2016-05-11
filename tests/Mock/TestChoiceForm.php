@@ -20,7 +20,6 @@ class TestChoiceForm extends AbstractForm{
 
         $this->setName("content_info");
 
-        $builder = $this->getBuilder();
 
         $builder->add("type", "choice", array("choices"=>$types, "label"=>"Tipo de contenido", "class"=>"form-control"));
 

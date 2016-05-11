@@ -58,6 +58,10 @@ class FormBuilder {
 
     }
 
+    function setForm(AbstractForm $form){
+        $this->_form = $form;
+    }
+
 
 
     function add($name, $key="text", $options=array()){

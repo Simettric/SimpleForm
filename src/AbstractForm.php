@@ -34,6 +34,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
 
         $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
         $this->_builder   = $builder;
+        $this->_builder->setForm($this);
 
         $this->configure($builder);
 
@@ -54,7 +55,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
      * @return FormBuilder
      */
     function getBuilder(){
-        return $this->_builder->create($this);
+        return $this->_builder;
     }
 
 
