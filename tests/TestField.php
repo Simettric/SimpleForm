@@ -67,6 +67,25 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
     }
 
+
+    function testRequired() {
+
+
+
+        $field = new SomeTestField("test_field", "test_form", array("required"=>false));
+        $field->bind("");
+
+
+        $this->assertCount(0, $field->getErrors());
+
+        $field = new SomeTestField("test_field", "test_form");
+        $field->bind("");
+
+
+        $this->assertCount(1, $field->getErrors());
+
+    }
+
     function testGetLabelTag() {
 
 

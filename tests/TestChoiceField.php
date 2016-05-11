@@ -135,6 +135,46 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase {
 
     }
 
+    function testChoiceRequiredValidator(){
 
+        $config = new \SimpleForm\Config();
+        $builder = new \SimpleForm\FormBuilder($config);
+        $form = $builder->create("test")->add(
+            "test_choice",
+            "choice",
+            array( "choices"=>array("audio"=>"Audio") )
+        )->getForm();
+
+        $form->bind(array("test_choice"=>""));
+
+        $this->assertFalse($form->isValid());
+
+        $form = $builder->create("test")->add(
+            "test_choice",
+            "choice",
+            array( "choices"=>array("audio"=>"Audio"), "required"=>false )
+        )->getForm();
+
+        $this->assertCount(0, $form["test_choice"]->getValidators());
+
+        $form->bind(array("test_choice"=>""));
+
+        $this->assertTrue($form->isValid());
+
+        $form = $builder->create("test")->add(
+            "test_choice",
+            "choice",
+            array( "choices"=>array("audio"=>"Audio"), "required"=>true )
+        )->getForm();
+
+        $this->assertCount(2, $form["test_choice"]->getValidators());
+
+        $form->bind(array());
+
+
+        $this->assertFalse($form->isValid());
+
+
+    }
 
 }

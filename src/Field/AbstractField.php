@@ -75,6 +75,7 @@ abstract class AbstractField {
             unset($this->_options["required"]);
 
         }else{
+
             $this->_html_attributes["required"] = "required";
             $this->_validators[] = new NotEmpty();
         }

@@ -33,7 +33,7 @@ class ChoiceField extends AbstractField {
             }
         }
 
-        if(!$choice_validator){
+        if(!$choice_validator && (!isset($this->_options["required"]) || $this->_options["required"])){
            $this->_validators[] = new InArray(array("haystack"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
         }
 

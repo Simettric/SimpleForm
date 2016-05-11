@@ -86,15 +86,20 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
 
         $this->_has_errors = false;
 
+        /**
+         * @var $field AbstractField
+         */
         foreach($this->_fields as $field){
-            $field->reset();
-        }
 
-        foreach($array as $key=>$value){
-            if(!$this->offsetGet($key)->bind($value)){
+            $field->reset();
+            $value = isset($array[$field->getName()]) ? $array[$field->getName()] : null;
+
+            if(!$field->bind($value)){
                 $this->_has_errors = true;
             }
+
         }
+
     }
 
     function isValid(){
