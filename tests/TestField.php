@@ -1,8 +1,6 @@
 <?php
 namespace SimpleForm\Test;
 
-
-
 use SimpleForm\Test\Mock\MockExecutionContext;
 use SimpleForm\Test\Mock\SomeTestField;
 use Symfony\Component\Translation\Translator;
@@ -14,15 +12,10 @@ use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\RecursiveValidator;
 use Zend\Validator\NotEmpty;
 
-class TestField  extends \PHPUnit_Framework_TestCase {
-
-
-
-
-
-    function testCreateDefault() {
-
-
+class TestField extends \PHPUnit_Framework_TestCase
+{
+    public function testCreateDefault()
+    {
         $field = new SomeTestField("test_field", "test_form");
 
         $attributes = $field->getAttributesArray();
@@ -30,14 +23,11 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
         $this->assertTrue(isset($attributes["required"]) && $attributes["required"]=="required");
         $this->assertTrue(false !== array_search(new NotEmpty(), $validators));
-
-
     }
 
 
-    function testCreateOptional() {
-
-
+    public function testCreateOptional()
+    {
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
 
         $attributes = $field->getAttributesArray();
@@ -45,15 +35,11 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
         $this->assertFalse(isset($attributes["required"]));
         $this->assertCount(0, $validators);
-
-
     }
 
 
-    function testValue() {
-
-
-
+    public function testValue()
+    {
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
         $field->setValue("whatever");
 
@@ -64,14 +50,11 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
 
         $this->assertEquals("test", $field->getValue());
-
     }
 
 
-    function testRequired() {
-
-
-
+    public function testRequired()
+    {
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
         $field->bind("");
 
@@ -83,30 +66,26 @@ class TestField  extends \PHPUnit_Framework_TestCase {
 
 
         $this->assertCount(1, $field->getErrors());
-
     }
 
-    function testGetLabelTag() {
-
-
+    public function testGetLabelTag()
+    {
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
 
         $this->assertEquals('<label for="test_form_test_field">test_field</label>', $field->getLabelTag());
         $this->assertEquals('<label for="test_form_test_field">Test</label>', $field->getLabelTag("Test"));
-
     }
 
-    function testGetInputTag() {
-
-
+    public function testGetInputTag()
+    {
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
 
         $field->setValue("test");
         $this->assertEquals('<input type="text" id="test_form_test_field"  name="test_form[test_field]" value="test">', $field->getInputTag());
-
     }
 
-    function testRenderField(){
+    public function testRenderField()
+    {
         $field = new SomeTestField("test_field", "test_form", array("required"=>false));
 
         $field->setValue("test");
@@ -115,7 +94,4 @@ class TestField  extends \PHPUnit_Framework_TestCase {
         $input = '<input type="text" id="test_form_test_field"  name="test_form[test_field]" value="test">';
         $this->assertEquals($label.$input, (string) $field);
     }
-
-
-
 }

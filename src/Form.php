@@ -4,12 +4,9 @@
  */
 namespace SimpleForm;
 
-
-class Form  extends  AbstractForm{
-
-
-    function configure(FormBuilder $builder){
-
+class Form extends AbstractForm
+{
+    public function configure(FormBuilder $builder)
+    {
     }
-
-} 
+}

@@ -5,13 +5,10 @@
 
 namespace SimpleForm\Field;
 
-
-class TextField extends AbstractField {
-
-    function getInputTag(){
-
+class TextField extends AbstractField
+{
+    public function getInputTag()
+    {
         return '<input type="text" value="' . $this->getValue() . '" ' . $this->getAttributes() . '>';
-
     }
-
-} 
+}

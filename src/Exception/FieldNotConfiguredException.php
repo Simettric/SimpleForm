@@ -5,7 +5,6 @@
 
 namespace SimpleForm\Exception;
 
-
-class FieldNotConfiguredException extends \Exception {
-
-} 
+class FieldNotConfiguredException extends \Exception
+{
+}
