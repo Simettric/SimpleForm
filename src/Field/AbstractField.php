@@ -8,10 +8,8 @@ namespace SimpleForm\Field;
 use Zend\Validator\AbstractValidator;
 use Zend\Validator\NotEmpty;
 
-
-abstract class AbstractField {
-
-
+abstract class AbstractField
+{
     protected $_errors     = array();
     protected $_options    = array();
     protected $_validators = array();
@@ -24,8 +22,8 @@ abstract class AbstractField {
     protected $_name;
     protected $_value;
 
-    function __construct($name, $form_name, $options=array(), $validators=array()){
-
+    public function __construct($name, $form_name, $options=array(), $validators=array())
+    {
         $this->_name       = $name;
         $this->_form_name  = $form_name;
         $this->_options    = $options;
@@ -36,19 +34,23 @@ abstract class AbstractField {
     }
 
 
-    function reset(){
+    public function reset()
+    {
         $this->setValue(null);
     }
 
-    function getOptions(){
+    public function getOptions()
+    {
         return $this->_options;
     }
 
-    function getValidators(){
+    public function getValidators()
+    {
         return $this->_validators;
     }
 
-    function getErrors(){
+    public function getErrors()
+    {
         return $this->_errors;
     }
 
@@ -57,25 +59,24 @@ abstract class AbstractField {
      * Override this method in order to check the required options
      * @return bool
      */
-    protected function _checkOptionsRequisites(){
+    protected function _checkOptionsRequisites()
+    {
         return true;
     }
 
 
-    protected function _configureHTMLAttributes(){
+    protected function _configureHTMLAttributes()
+    {
         unset($this->_options["validators"]);
 
-        if(isset($this->_options["required"])){
-
-            if($this->_options["required"]){
+        if (isset($this->_options["required"])) {
+            if ($this->_options["required"]) {
                 $this->_html_attributes["required"] = "required";
                 $this->_validators[] = new NotEmpty();
             }
 
             unset($this->_options["required"]);
-
-        }else{
-
+        } else {
             $this->_html_attributes["required"] = "required";
             $this->_validators[] = new NotEmpty();
         }
@@ -83,23 +84,25 @@ abstract class AbstractField {
         $this->_html_attributes["id"]   = $this->_form_name . "_" . $this->_name;
         $this->_html_attributes["name"] = $this->_form_name . "[" . $this->_name . "]";
 
-        foreach($this->_options as $key=>$option){
+        foreach ($this->_options as $key=>$option) {
             $this->_html_attributes[$key] = $option;
         }
-
     }
 
-    function getName(){
+    public function getName()
+    {
         return $this->_name;
     }
 
-    function getAttributesArray(){
+    public function getAttributesArray()
+    {
         return $this->_html_attributes;
     }
 
-    function getAttributes(){
+    public function getAttributes()
+    {
         $html = " ";
-        foreach($this->_html_attributes as $key=>$value){
+        foreach ($this->_html_attributes as $key=>$value) {
             $html .= ' ' .  $key . '="' . $value . '"';
         }
 
@@ -107,17 +110,19 @@ abstract class AbstractField {
         return $html;
     }
 
-    function getValue(){
+    public function getValue()
+    {
         return $this->_value;
     }
 
-    function setValue($value){
+    public function setValue($value)
+    {
         $this->_value = $value;
     }
 
 
-    function bind($value){
-
+    public function bind($value)
+    {
         $this->reset();
 
         $this->setValue($value);
@@ -127,72 +132,62 @@ abstract class AbstractField {
         /**
          * @var $validator AbstractValidator
          */
-        foreach($this->_validators as $validator){
-
-            if(is_array($value)){
-
-                foreach($value as $_value){
-
-                    if(!$validator->isValid($_value)){
-
-                        foreach($validator->getMessages() as $i=>$message){
+        foreach ($this->_validators as $validator) {
+            if (is_array($value)) {
+                foreach ($value as $_value) {
+                    if (!$validator->isValid($_value)) {
+                        foreach ($validator->getMessages() as $i=>$message) {
                             $this->_errors[] = $message;
                         }
-
                     }
-
                 }
-
-            }else{
-
-                if(!$validator->isValid($value)){
-
-                    foreach($validator->getMessages() as $i=>$message){
+            } else {
+                if (!$validator->isValid($value)) {
+                    foreach ($validator->getMessages() as $i=>$message) {
                         $this->_errors[] = $message;
                     }
-
                 }
-
             }
-
         }
 
-        if(count($this->_errors)){
-
-            if(!isset($this->_html_attributes["class"]))
+        if (count($this->_errors)) {
+            if (!isset($this->_html_attributes["class"])) {
                 $this->_html_attributes["class"] = "";
+            }
 
             $this->_html_attributes["class"] .= " error";
         }
 
         return !count($this->_errors);
-
     }
 
 
-    function __toString(){
+    public function __toString()
+    {
         return $this->getLabelTag() . $this->getInputTag() . $this->getErrorTag();
     }
 
-    function getLabelTag($label=null){
+    public function getLabelTag($label=null)
+    {
         $label = isset($this->_options["label"]) ? $this->_options["label"] : ($label ? $label :$this->_name);
         return '<label for="' . $this->_form_name . '_'. $this->_name .'">' . $label . '</label>';
     }
 
-    function hasError(){
+    public function hasError()
+    {
         return count($this->_errors);
     }
 
-    function getErrorArray(){
+    public function getErrorArray()
+    {
         return $this->_errors;
     }
 
-    function getErrorTag(){
-
-        if($this->hasError()){
-
+    public function getErrorTag()
+    {
+        if ($this->hasError()) {
             $html = "";
-            foreach($this->getErrorArray() as $key=>$error){
+            foreach ($this->getErrorArray() as $key=>$error) {
                 $html .= '<span class="error">' . $error . '</span>';
             }
             return $html;
@@ -201,6 +196,5 @@ abstract class AbstractField {
         return null;
     }
 
-    abstract function  getInputTag();
-
-} 
+    abstract public function getInputTag();
+}

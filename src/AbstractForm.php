@@ -5,13 +5,11 @@
 
 namespace SimpleForm;
 
-
 use SimpleForm\Exception\FieldNotConfiguredException;
 use SimpleForm\Field\AbstractField;
 
-abstract class AbstractForm implements \Iterator, \ArrayAccess {
-
-
+abstract class AbstractForm implements \Iterator, \ArrayAccess
+{
     protected $_fields     = array();
 
     protected $_has_errors = false;
@@ -30,108 +28,113 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
      * @param array $data
      * @param FormBuilder $builder
      */
-    function __construct($data, FormBuilder $builder){
-
+    public function __construct($data, FormBuilder $builder)
+    {
         $this->_data      = is_object($data) ?  get_object_vars($data) : $data;
         $this->_builder   = $builder;
         $this->_builder->setForm($this);
 
         $this->configure($builder);
-
     }
 
-    abstract function configure(FormBuilder $builder);
+    abstract public function configure(FormBuilder $builder);
 
 
-    function setName($name){
+    public function setName($name)
+    {
         $this->_name = $name;
     }
 
-    function getName(){
+    public function getName()
+    {
         return $this->_name;
     }
 
     /**
      * @return FormBuilder
      */
-    function getBuilder(){
+    public function getBuilder()
+    {
         return $this->_builder;
     }
 
 
-    function addField(AbstractField $field){
-
-        if(isset($this->_data[$field->getName()])){
+    public function addField(AbstractField $field)
+    {
+        if (isset($this->_data[$field->getName()])) {
             $field->setValue($this->_data[$field->getName()]);
         }
 
         $this->_fields[$field->getName()] = $field;
-
     }
 
-    function getValue($key){
+    public function getValue($key)
+    {
         return $this->offsetGet($key)->getValue();
     }
 
-    function getValues(){
+    public function getValues()
+    {
         $values = array();
-        foreach($this->_fields as $key=>$field){
+        foreach ($this->_fields as $key=>$field) {
             $values[$key] = $field->getValue();
         }
         return $values;
     }
 
-    function bind(array $array){
-
-
+    public function bind(array $array)
+    {
         $this->_has_errors = false;
 
         /**
          * @var $field AbstractField
          */
-        foreach($this->_fields as $field){
-
+        foreach ($this->_fields as $field) {
             $field->reset();
             $value = isset($array[$field->getName()]) ? $array[$field->getName()] : null;
 
-            if(!$field->bind($value)){
+            if (!$field->bind($value)) {
                 $this->_has_errors = true;
             }
-
         }
-
     }
 
-    function isValid(){
+    public function isValid()
+    {
         return $this->_has_errors == false;
     }
 
 
-    function rewind() {
+    public function rewind()
+    {
         reset($this->_fields);
     }
 
-    function current() {
+    public function current()
+    {
         return current($this->_fields);
     }
 
-    function key() {
+    public function key()
+    {
         return key($this->_fields);
     }
 
-    function next() {
+    public function next()
+    {
         next($this->_fields);
     }
 
-    function valid() {
+    public function valid()
+    {
         return key($this->_fields) !== null;
     }
 
-    function getErrors(){
-
+    public function getErrors()
+    {
         $errors = array();
-        if($this->_has_errors){
-            foreach($this->_fields as $field){
+        if ($this->_has_errors) {
+            foreach ($this->_fields as $field) {
 
                 /**
                  * @var $field AbstractField
@@ -140,13 +143,13 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
             }
         }
         return $errors;
-
     }
 
 
-   function offsetExists (  $offset ){
+    public function offsetExists($offset)
+    {
         return isset($this->_fields[$offset]);
-   }
+    }
 
 
     /**
@@ -154,29 +157,25 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess {
      * @return AbstractField
      * @throws Exception\FieldNotConfiguredException
      */
-    function offsetGet (  $offset ){
-
-        if($this->offsetExists($offset)) {
-
+    public function offsetGet($offset)
+    {
+        if ($this->offsetExists($offset)) {
             return $this->_fields[$offset];
-
-        }else{
-
+        } else {
             throw new FieldNotConfiguredException();
-
         }
+    }
 
-   }
 
-
-   function offsetSet (  $offset ,  $value ){
+    public function offsetSet($offset,  $value)
+    {
         //todo: exception
-   }
+    }
 
 
-   function offsetUnset (  $offset ){
-       $this->_fields[$offset] = null;
-       unset($this->_fields[$offset]);
-   }
-
-} 
+    public function offsetUnset($offset)
+    {
+        $this->_fields[$offset] = null;
+        unset($this->_fields[$offset]);
+    }
+}
