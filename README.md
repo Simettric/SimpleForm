@@ -2,6 +2,8 @@ SimpleForm
 ==========
 [![Build Status](https://travis-ci.org/Simettric/SimpleForm.svg?branch=master)](https://travis-ci.org/Simettric/SimpleForm)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/b95de71b-f178-4de0-a44b-4c55eb262599/big.png)](https://insight.sensiolabs.com/projects/b95de71b-f178-4de0-a44b-4c55eb262599)
+
 A simple way to working with forms in php.
 
 ### Install
