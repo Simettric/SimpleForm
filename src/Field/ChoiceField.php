@@ -33,7 +33,7 @@ class ChoiceField extends AbstractField
         }
 
         if (!$choice_validator && (!isset($this->_options["required"]) || $this->_options["required"])) {
-            $this->_validators[] = new InArray(array("haystack"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
+            $this->_validators[] = new InArray(array("haystack"=>array_values($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
         }
     }
 
@@ -59,7 +59,7 @@ class ChoiceField extends AbstractField
 
             $html = '<select ' . $this->getAttributes() . '>';
 
-            foreach ($this->_options["choices"] as $value=>$label) {
+            foreach ($this->_options["choices"] as $label=>$value) {
                 $html .= '<option' . ($value == $this->getValue() ? ' selected="selected"' : '') .
                          ' value="' . $value . '">' . $label .
                          '</option>';
@@ -79,7 +79,7 @@ class ChoiceField extends AbstractField
             }
 
 
-            foreach ($this->_options["choices"] as $value=>$label) {
+            foreach ($this->_options["choices"] as $label=>$value) {
                 $checked = false;
                 if ($is_multiple) {
                     $values  = is_array($this->getValue()) ? $this->getValue() : array($this->getValue());

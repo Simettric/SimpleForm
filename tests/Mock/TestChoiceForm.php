@@ -14,7 +14,7 @@ class TestChoiceForm extends AbstractForm
 {
     public function configure(FormBuilder $builder)
     {
-        $types     = array("image"=> "Imagen", "audio"=>"Audio");
+        $types     = array("Imagen"=> "image", "Audio"=>"audio");
 
         $this->setName("content_info");
 

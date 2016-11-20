@@ -17,7 +17,7 @@ class SomeFormTest extends \SimpleForm\AbstractForm
 
         $builder->add("test_field", "test_field", array())
             ->add("test_choice", "choice", array(
-                "choices"=>array("key_test"=>"Test")
+                "choices"=>array("Test"=>"key_test")
             ));
     }
 }
