@@ -22,6 +22,16 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
         $this->assertEquals($html, $field->getInputTag());
     }
 
+    public function testEmptyOption()
+    {
+        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value"), "empty_option"=>"test"));
+
+
+        $html = '<select   required="required" id="test_form_choice" name="test_form[choice]"><option value="">test</option><option value="value">test_option</option></select>';
+
+        $this->assertEquals($html, $field->getInputTag());
+    }
+
     public function testGetInputTagSelectMultiple()
     {
         $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value"), "multiple"=>true));

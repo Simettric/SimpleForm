@@ -44,7 +44,7 @@ class ChoiceField extends AbstractField
         $is_multiple   = $this->_options["multiple"];
 
 
-        foreach (array("choices", "multiple", "expanded") as $attribute) {
+        foreach (array("choices", "multiple", "expanded", "empty_option") as $attribute) {
             if (isset($this->_html_attributes[$attribute])) {
                 unset($this->_html_attributes[$attribute]);
             }
@@ -58,6 +58,13 @@ class ChoiceField extends AbstractField
             }
 
             $html = '<select ' . $this->getAttributes() . '>';
+
+            $empty_option = isset($this->_options["empty_option"]) ? $this->_options["empty_option"] : null;
+
+            if($empty_option)
+            {
+                $html .= '<option value="">' . $empty_option . '</option>';
+            }
 
             foreach ($this->_options["choices"] as $label=>$value) {
                 $html .= '<option' . ($value == $this->getValue() ? ' selected="selected"' : '') .
