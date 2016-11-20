@@ -10,12 +10,11 @@
         }
     ],
     "require": {
-        "php": ">=5.3.3",
+        "php": ">=5.4",
         "zendframework/zend-validator": "2.2.10"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.0",
-        "friendsofphp/php-cs-fixer":"~1.0"
+        "phpunit/phpunit": "~4.0"
     },
     "autoload": {
         "psr-4": {
