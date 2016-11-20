@@ -2,6 +2,7 @@
 
 namespace SimpleForm\Test;
 
+use SimpleForm\Field\ChoiceField;
 use Zend\Validator\InArray;
 
 class TestChoiceField extends \PHPUnit_Framework_TestCase
@@ -14,7 +15,8 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testGetInputTagSelectSingle()
     {
-        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value")));
+        $field = new \SimpleForm\Field\ChoiceField(array("choices"=>array("test_option"=>"value")));
+        $field->configure("choice", "test_form" );
 
 
         $html = '<select   required="required" id="test_form_choice" name="test_form[choice]"><option value="value">test_option</option></select>';
@@ -24,8 +26,8 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testEmptyOption()
     {
-        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value"), "empty_option"=>"test"));
-
+        $field = new \SimpleForm\Field\ChoiceField(array("choices"=>array("test_option"=>"value"), "empty_option"=>"test"));
+        $field->configure("choice", "test_form");
 
         $html = '<select   required="required" id="test_form_choice" name="test_form[choice]"><option value="">test</option><option value="value">test_option</option></select>';
 
@@ -34,8 +36,8 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testGetInputTagSelectMultiple()
     {
-        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value"), "multiple"=>true));
-
+        $field = new \SimpleForm\Field\ChoiceField(array("choices"=>array("test_option"=>"value"), "multiple"=>true));
+        $field->configure("choice", "test_form");
 
         $html = '<select   required="required" id="test_form_choice" name="test_form[choice]" multiple="multiple"><option value="value">test_option</option></select>';
 
@@ -44,8 +46,8 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testGetInputTagCheckboxes()
     {
-        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value"), "multiple"=>true, "expanded"=>true));
-
+        $field = new \SimpleForm\Field\ChoiceField(array("choices"=>array("test_option"=>"value"), "multiple"=>true, "expanded"=>true));
+        $field->configure("choice", "test_form");
 
         $html = '<p   required="required" id="test_form_choice_value" class=" choice-item"><label><input type="checkbox" name="test_form[choice][]"  value="value"/> test_option</label></p>';
 
@@ -54,8 +56,8 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testGetInputTagRadios()
     {
-        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=>array("test_option"=>"value"), "multiple"=>false, "expanded"=>true));
-
+        $field = new \SimpleForm\Field\ChoiceField(array("choices"=>array("test_option"=>"value"), "multiple"=>false, "expanded"=>true));
+        $field->configure("choice", "test_form");
 
         $html = '<p   required="required" id="test_form_choice_value" class=" choice-item"><label><input type="radio" name="test_form[choice]"  value="value"/> test_option</label></p>';
 
@@ -66,8 +68,8 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
     {
         $choices = array("test_option"=>"value");
 
-        $field = new \SimpleForm\Field\ChoiceField("choice", "test_form", array("choices"=> $choices, "multiple"=>false, "expanded"=>true));
-
+        $field = new \SimpleForm\Field\ChoiceField(array("choices"=> $choices, "multiple"=>false, "expanded"=>true));
+        $field->configure("choice", "test_form");
 
         $this->assertCount(2, $field->getValidators());
 
@@ -93,13 +95,11 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testFailedChoiceErrors()
     {
-        $config = new \SimpleForm\Config();
-        $builder = new \SimpleForm\FormBuilder($config);
-        $form = $builder->create("test")->add(
-            "test_choice",
-            "choice",
-            array( "choices"=>array("test"=>1) )
-        )->getForm();
+        $builder = new \SimpleForm\FormBuilder();
+
+        $field   = new ChoiceField(array( "choices"=>array("test"=>1) ));
+
+        $form    = $builder->create("test")->add("test_choice", $field)->getForm();
 
         $form->bind(array("test_choice"=>-1));
 
@@ -113,12 +113,10 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testChoiceValidator()
     {
-        $config = new \SimpleForm\Config();
-        $builder = new \SimpleForm\FormBuilder($config);
+        $builder = new \SimpleForm\FormBuilder();
         $form = $builder->create("test")->add(
             "test_choice",
-            "choice",
-            array( "choices"=>array("Audio"=>"audio") )
+            new ChoiceField(array( "choices"=>array("Audio"=>"audio") ))
         )->getForm();
 
         $form->bind(array("test_choice"=>"audio"));
@@ -128,22 +126,20 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
     public function testChoiceRequiredValidator()
     {
-        $config = new \SimpleForm\Config();
-        $builder = new \SimpleForm\FormBuilder($config);
+        $builder = new \SimpleForm\FormBuilder();
         $form = $builder->create("test")->add(
             "test_choice",
-            "choice",
-            array( "choices"=>array("Audio"=>"audio") )
+            new ChoiceField(array( "choices"=>array("Audio"=>"audio") ))
         )->getForm();
 
         $form->bind(array("test_choice"=>""));
 
         $this->assertFalse($form->isValid());
 
+        $builder = new \SimpleForm\FormBuilder();
         $form = $builder->create("test")->add(
             "test_choice",
-            "choice",
-            array( "choices"=>array("Audio"=>"audio"), "required"=>false )
+            new ChoiceField(array( "choices"=>array("Audio"=>"audio"), "required"=>false ))
         )->getForm();
 
         $this->assertCount(0, $form["test_choice"]->getValidators());
@@ -152,10 +148,10 @@ class TestChoiceField extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($form->isValid());
 
+        $builder = new \SimpleForm\FormBuilder();
         $form = $builder->create("test")->add(
             "test_choice",
-            "choice",
-            array( "choices"=>array("audio"=>"Audio"), "required"=>true )
+            new ChoiceField(array( "choices"=>array("audio"=>"Audio"), "required"=>true ))
         )->getForm();
 
         $this->assertCount(2, $form["test_choice"]->getValidators());

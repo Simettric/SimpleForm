@@ -7,6 +7,8 @@
  */
 namespace SimpleForm\Test\Mock;
 
+use SimpleForm\Field\ChoiceField;
+use SimpleForm\Field\TextField;
 use SimpleForm\FormBuilder;
 
 class SomeFormTest extends \SimpleForm\AbstractForm
@@ -15,9 +17,9 @@ class SomeFormTest extends \SimpleForm\AbstractForm
     {
         $this->setName("test_form");
 
-        $builder->add("test_field", "test_field", array())
-            ->add("test_choice", "choice", array(
+        $builder->add("test_field", new TextField(array()))
+            ->add("test_choice", new ChoiceField(array(
                 "choices"=>array("Test"=>"key_test")
-            ));
+            )));
     }
 }

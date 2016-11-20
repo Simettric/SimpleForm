@@ -6,27 +6,21 @@
 namespace SimpleForm;
 
 use SimpleForm\Field\AbstractField;
+use SimpleForm\Field\TextField;
 
 class FormBuilder
 {
 
 
-    /**
-     * @var Config
-     */
-    private $_fields_config;
 
 
     /**
-     * @var Form
+     * @var AbstractForm
      */
     private $_form;
 
 
-    public function __construct(Config $config)
-    {
-        $this->_fields_config = $config;
-    }
+
 
 
     /**
@@ -37,7 +31,7 @@ class FormBuilder
     public function create($form, $values=array())
     {
         if (is_string($form)) {
-            $this->_form      = new Form($values, $this);
+            $this->_form      = new FormBuilderForm($values, $this);
             $this->_form->setName($form);
         } elseif ($form instanceof AbstractForm) {
             $this->_form      = $form;
@@ -48,32 +42,35 @@ class FormBuilder
 
     public function setForm(AbstractForm $form)
     {
+        if($this->_form instanceof AbstractForm)
+            throw new \Exception('Form already setted');
+
         $this->_form = $form;
     }
 
 
 
-    public function add($name, $key="text", $options=array())
+    public function add($name, AbstractField $field=null)
     {
-        if (!$field_class = $this->_fields_config->getFieldDefinition($key)) {
-            throw new \Exception("Field $key is not defined in configuration");
+        if(!$this->_form instanceof AbstractForm)
+            throw new \Exception('Form not created yet, you need to call FormBuilder::create method first!');
+
+        if(!$field)
+        {
+            $field = new TextField();
         }
 
-
-        /**
-         * @var $instance AbstractField
-         */
+        $field->configure($name, $this->getForm()->getName());
 
 
-        $instance = new $field_class($name, $this->getForm()->getName(), $options, (isset($options["validators"]) ? $options["validators"] : array()));
-
-        $this->_form->addField($instance);
+        $this->_form->addField($field);
         return $this;
     }
 
     public function remove($key)
     {
-        //todo: check if a form was created
+        if(!$this->_form instanceof AbstractForm)
+            throw new \Exception('Form not created yet, you need to call FormBuilder::create method first!');
 
         $this->_form->offsetUnset($key);
         return $this;
@@ -81,7 +78,7 @@ class FormBuilder
 
 
     /**
-     * @return Form
+     * @return AbstractForm
      */
     public function getForm()
     {

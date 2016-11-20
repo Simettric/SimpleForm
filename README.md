@@ -8,11 +8,7 @@ A simple way to working with forms in php.
 
     composer require simettric/simple-form
 
-### Configure
-```php
-$config = new Config();
-$config->addFieldDefinition("customField", "\\Namespace\\CustomField");
-```
+
 
 ### Creating Forms
 
@@ -24,13 +20,13 @@ $builder = new FormBuilder($config);
 $builder->create("message")
         ->add("firstName")
         ->add("lastName")
-        ->add("email", "email")
-        ->add("subject", "choice", array("choices"=>array())) //InArray is implicit unless we configure our own ChoiceValidator in the "validators" key
-        ->add("message", "textarea", array(
+        ->add("email", new InputTypeField(array("type"=>"email", "validators"=> new Email() )))
+        ->add("subject", new ChoiceField(array("choices"=>array()))) //InArray is implicit unless we configure our own ChoiceValidator in the "validators" key
+        ->add("message", new TextareaField(array(
               "validators" => array(
                     new NotEmpty(), 
                     new StringLength(array("min"=>4))
-        ));
+        )));
         
 $data_array = array("firstName"=>"John");
 $form       = $builder->getForm($data_array);
@@ -46,13 +42,13 @@ class MessageForm extends AbstractForm{
 
         $builder->add("firstName")
                 ->add("lastName")
-                ->add("email", "email")
-                ->add("subject", "choice", array("choices"=>array())) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validators" key
-                ->add("message", "textarea", array(
-                                              "validators" => array(
-                                                    new NotEmpty(),
-                                                    new StringLength(array("min"=>4))
-                                            ));
+                ->add("email", new InputTypeField(array("type"=>"email", "validators"=> new Email() )))
+                ->add("subject", new ChoiceField(array("choices"=>array()))) //ChoiceValidator is implicit unless we configure our own ChoiceValidator in the "validators" key
+                ->add("message", new TextareaField(array(
+                                               "validators" => array(
+                                                     new NotEmpty(), 
+                                                     new StringLength(array("min"=>4))
+                                         )))
 
     }
 
@@ -60,7 +56,7 @@ class MessageForm extends AbstractForm{
 }
 
 $data_array = array("firstName"=>"John");
-$form       = new MessageForm($data_array, $config);
+$form       = new MessageForm($data_array, new FormBuilder());
 ```        
         
 ### Validating Forms
@@ -68,13 +64,13 @@ $form       = new MessageForm($data_array, $config);
 SimpleForm uses [Zend Validator](http://framework.zend.com/manual/current/en/modules/zend.validator.html) to manage the fields validation in its forms.
 
 ```php
-$builder->add("message", "textarea", array(
+$builder->add("message", new TextareaField(array(
               "label"      => "Write your message",
               "validators" => array(
                     new NotEmpty(), 
                     new StringLength(array("min"=>4)
               )
-));
+)));
 ```  
 
 In your controller, you can bind the request data and check if the form is valid

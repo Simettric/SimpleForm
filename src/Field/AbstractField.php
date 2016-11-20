@@ -22,12 +22,23 @@ abstract class AbstractField
     protected $_name;
     protected $_value;
 
-    public function __construct($name, $form_name, $options=array(), $validators=array())
+    function __construct($options=array())
+    {
+
+        $this->_options    = $options;
+
+        if(isset($options["validators"]))
+        {
+            $this->_validators = $options["validators"];
+            unset($this->_options["validators"]);
+        }
+    }
+
+    public function configure($name, $form_name)
     {
         $this->_name       = $name;
         $this->_form_name  = $form_name;
-        $this->_options    = $options;
-        $this->_validators = $validators;
+
 
         $this->_checkOptionsRequisites();
         $this->_configureHTMLAttributes();
@@ -67,7 +78,7 @@ abstract class AbstractField
 
     protected function _configureHTMLAttributes()
     {
-        unset($this->_options["validators"]);
+
 
         if (isset($this->_options["required"])) {
             if ($this->_options["required"]) {

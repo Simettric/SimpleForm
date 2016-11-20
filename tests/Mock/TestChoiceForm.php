@@ -8,6 +8,7 @@
 namespace SimpleForm\Test\Mock;
 
 use SimpleForm\AbstractForm;
+use SimpleForm\Field\ChoiceField;
 use SimpleForm\FormBuilder;
 
 class TestChoiceForm extends AbstractForm
@@ -19,6 +20,6 @@ class TestChoiceForm extends AbstractForm
         $this->setName("content_info");
 
 
-        $builder->add("type", "choice", array("choices"=>$types, "label"=>"Tipo de contenido", "class"=>"form-control"));
+        $builder->add("type", new ChoiceField(array("choices"=>$types, "label"=>"Tipo de contenido", "class"=>"form-control")));
     }
 }
