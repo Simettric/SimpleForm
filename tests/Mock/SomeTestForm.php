@@ -11,7 +11,7 @@ use SimpleForm\Field\ChoiceField;
 use SimpleForm\Field\TextField;
 use SimpleForm\FormBuilder;
 
-class SomeFormTest extends \SimpleForm\AbstractForm
+class SomeTestForm extends \SimpleForm\AbstractForm
 {
     public function configure(FormBuilder $builder)
     {

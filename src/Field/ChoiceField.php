@@ -8,7 +8,7 @@ use Zend\Validator\InArray;
 
 class ChoiceField extends AbstractField
 {
-    public function _checkOptionsRequisites()
+    public function checkOptionsRequisites()
     {
         if (!isset($this->_options["multiple"])) {
             $this->_options["multiple"] = false;

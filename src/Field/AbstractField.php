@@ -22,7 +22,7 @@ abstract class AbstractField
     protected $_name;
     protected $_value;
 
-    function __construct($options=array())
+    public function __construct($options=array())
     {
 
         $this->_options    = $options;
@@ -40,8 +40,8 @@ abstract class AbstractField
         $this->_form_name  = $form_name;
 
 
-        $this->_checkOptionsRequisites();
-        $this->_configureHTMLAttributes();
+        $this->checkOptionsRequisites();
+        $this->configureHTMLAttributes();
     }
 
 
@@ -70,13 +70,13 @@ abstract class AbstractField
      * Override this method in order to check the required options
      * @return bool
      */
-    protected function _checkOptionsRequisites()
+    protected function checkOptionsRequisites()
     {
         return true;
     }
 
 
-    protected function _configureHTMLAttributes()
+    protected function configureHTMLAttributes()
     {
 
 

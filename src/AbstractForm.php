@@ -101,7 +101,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess
 
     public function isValid()
     {
-        return $this->_has_errors == false;
+        return $this->_has_errors === false;
     }
 
 
@@ -169,7 +169,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess
 
     public function offsetSet($offset,  $value)
     {
-        //todo: exception
+        throw new \Exception('Setting fields with the array selector is not permitted');
     }
 
 

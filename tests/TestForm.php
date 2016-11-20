@@ -4,7 +4,7 @@ namespace SimpleForm\Test;
 use SimpleForm\AbstractForm;
 use SimpleForm\Field\AbstractField;
 use SimpleForm\FormBuilder;
-use SimpleForm\Test\Mock\SomeFormTest;
+use SimpleForm\Test\Mock\SomeTestForm;
 use SimpleForm\Test\Mock\SomeTestField;
 use SimpleForm\Test\Mock\TestChoiceForm;
 
@@ -59,7 +59,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
 
     public function testFormClass()
     {
-        $form = new SomeFormTest(array("test_field"=>"value", "test_choice"=>"key_test"), $this->createFormBuilder());
+        $form = new SomeTestForm(array("test_field"=>"value", "test_choice"=>"key_test"), $this->createFormBuilder());
 
         $this->assertEquals("test_form", $form->getName());
         $this->assertEquals("value", $form->getValue("test_field"));
@@ -71,7 +71,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
 
     public function testFormIsValid()
     {
-        $form = new SomeFormTest(array(), $this->createFormBuilder());
+        $form = new SomeTestForm(array(), $this->createFormBuilder());
 
         $form->bind(array("test_field"=>"value", "test_choice"=>"key_test"));
 
