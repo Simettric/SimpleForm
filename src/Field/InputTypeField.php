@@ -7,7 +7,7 @@ namespace SimpleForm\Field;
 
 class InputTypeField extends AbstractField
 {
-    protected function _configureHTMLAttributes()
+    protected function configureHTMLAttributes()
     {
         parent::configureHTMLAttributes();
         unset($this->_html_attributes["type"]);
