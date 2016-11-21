@@ -1,8 +1,8 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
- * Date: 10/5/16
- * Time: 14:29
+ * Mock class used in the tests
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Test\Mock;

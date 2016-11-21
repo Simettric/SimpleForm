@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Tests for the ChoiceField
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Test;
 
 use SimpleForm\Field\ChoiceField;

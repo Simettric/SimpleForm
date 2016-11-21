@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Base Form Field class.
+ *
+ * You need to extend it with your custom Form Fields.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Field;

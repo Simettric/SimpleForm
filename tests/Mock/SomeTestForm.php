@@ -1,9 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: Asier
- * Date: 4/08/14
- * Time: 19:07
+ * Mock class used in the tests
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 namespace SimpleForm\Test\Mock;
 

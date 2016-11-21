@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Choice Form Field.
+ *
+ * This creates a select, list of checkboxes or radio buttons for value selection.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 namespace SimpleForm\Field;
 

@@ -1,6 +1,11 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Form Builder class.
+ *
+ * You need to use it in order to configure the form fields.
+ * Also you can build forms on the fly, without the need of creating a Form class.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm;
@@ -11,17 +16,10 @@ use SimpleForm\Field\TextField;
 class FormBuilder
 {
 
-
-
-
     /**
      * @var AbstractForm
      */
     private $_form;
-
-
-
-
 
     /**
      * @param $form
@@ -40,6 +38,10 @@ class FormBuilder
         return $this;
     }
 
+    /**
+     * @param AbstractForm $form
+     * @throws \Exception
+     */
     public function setForm(AbstractForm $form)
     {
         if($this->_form instanceof AbstractForm)
@@ -49,7 +51,12 @@ class FormBuilder
     }
 
 
-
+    /**
+     * @param $name
+     * @param AbstractField|null $field
+     * @return $this
+     * @throws \Exception
+     */
     public function add($name, AbstractField $field=null)
     {
         if(!$this->_form instanceof AbstractForm)
@@ -67,6 +74,12 @@ class FormBuilder
         return $this;
     }
 
+
+    /**
+     * @param $key
+     * @return $this
+     * @throws \Exception
+     */
     public function remove($key)
     {
         if(!$this->_form instanceof AbstractForm)

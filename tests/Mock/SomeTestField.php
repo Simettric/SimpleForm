@@ -1,5 +1,9 @@
 <?php
-
+/**
+ * Mock class used in the tests
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Test\Mock;
 
 use SimpleForm\Field\AbstractField;

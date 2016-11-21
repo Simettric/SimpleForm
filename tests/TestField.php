@@ -1,4 +1,9 @@
 <?php
+/**
+ * Tests for a custom Field
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Test;
 
 use SimpleForm\Test\Mock\MockExecutionContext;

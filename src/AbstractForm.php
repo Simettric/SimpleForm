@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Base Form class.
+ *
+ * You need to extend it with your custom Form classes.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm;

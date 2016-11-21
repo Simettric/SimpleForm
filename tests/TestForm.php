@@ -1,4 +1,9 @@
 <?php
+/**
+ * Tests for a custom Form class
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Test;
 
 use SimpleForm\AbstractForm;
