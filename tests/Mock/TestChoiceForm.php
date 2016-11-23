@@ -1,24 +1,25 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
- * Date: 10/5/16
- * Time: 14:29
+ * Mock class used in the tests
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Test\Mock;
 
 use SimpleForm\AbstractForm;
+use SimpleForm\Field\ChoiceField;
 use SimpleForm\FormBuilder;
 
 class TestChoiceForm extends AbstractForm
 {
     public function configure(FormBuilder $builder)
     {
-        $types     = array("image"=> "Imagen", "audio"=>"Audio");
+        $types     = array("Imagen"=> "image", "Audio"=>"audio");
 
         $this->setName("content_info");
 
 
-        $builder->add("type", "choice", array("choices"=>$types, "label"=>"Tipo de contenido", "class"=>"form-control"));
+        $builder->add("type", new ChoiceField(array("choices"=>$types, "label"=>"Tipo de contenido", "class"=>"form-control")));
     }
 }

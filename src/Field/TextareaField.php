@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Textarea Form Field.
+ *
+ * It creates an textarea html tag.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Field;

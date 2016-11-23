@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Choice Form Field.
+ *
+ * This creates a select, list of checkboxes or radio buttons for value selection.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 namespace SimpleForm\Field;
 
@@ -8,7 +12,7 @@ use Zend\Validator\InArray;
 
 class ChoiceField extends AbstractField
 {
-    public function _checkOptionsRequisites()
+    public function checkOptionsRequisites()
     {
         if (!isset($this->_options["multiple"])) {
             $this->_options["multiple"] = false;
@@ -33,7 +37,7 @@ class ChoiceField extends AbstractField
         }
 
         if (!$choice_validator && (!isset($this->_options["required"]) || $this->_options["required"])) {
-            $this->_validators[] = new InArray(array("haystack"=>array_keys($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
+            $this->_validators[] = new InArray(array("haystack"=>array_values($this->_options["choices"]), "multiple"=>$this->_options["multiple"]));
         }
     }
 
@@ -44,7 +48,7 @@ class ChoiceField extends AbstractField
         $is_multiple   = $this->_options["multiple"];
 
 
-        foreach (array("choices", "multiple", "expanded") as $attribute) {
+        foreach (array("choices", "multiple", "expanded", "empty_option") as $attribute) {
             if (isset($this->_html_attributes[$attribute])) {
                 unset($this->_html_attributes[$attribute]);
             }
@@ -59,7 +63,14 @@ class ChoiceField extends AbstractField
 
             $html = '<select ' . $this->getAttributes() . '>';
 
-            foreach ($this->_options["choices"] as $value=>$label) {
+            $empty_option = isset($this->_options["empty_option"]) ? $this->_options["empty_option"] : null;
+
+            if($empty_option)
+            {
+                $html .= '<option value="">' . $empty_option . '</option>';
+            }
+
+            foreach ($this->_options["choices"] as $label=>$value) {
                 $html .= '<option' . ($value == $this->getValue() ? ' selected="selected"' : '') .
                          ' value="' . $value . '">' . $label .
                          '</option>';
@@ -79,7 +90,7 @@ class ChoiceField extends AbstractField
             }
 
 
-            foreach ($this->_options["choices"] as $value=>$label) {
+            foreach ($this->_options["choices"] as $label=>$value) {
                 $checked = false;
                 if ($is_multiple) {
                     $values  = is_array($this->getValue()) ? $this->getValue() : array($this->getValue());

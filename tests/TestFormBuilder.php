@@ -1,17 +1,20 @@
 <?php
-
+/**
+ * Tests for the FormBuilder
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Test;
 
+use SimpleForm\AbstractForm;
 use SimpleForm\Field\AbstractField;
-use SimpleForm\Form;
+use SimpleForm\Test\Mock\SomeTestField;
 
 class TestFormBuilder extends \PHPUnit_Framework_TestCase
 {
     public function createFormBuilder()
     {
-        $config = new \SimpleForm\Config();
-        $config->addFieldDefinition("test_field", "SimpleForm\\Test\\Mock\\SomeTestField");
-        return new \SimpleForm\FormBuilder($config);
+        return new \SimpleForm\FormBuilder();
     }
 
 
@@ -22,7 +25,7 @@ class TestFormBuilder extends \PHPUnit_Framework_TestCase
         $form = $builder->create("test")->getForm();
 
 
-        $this->assertTrue($form instanceof Form);
+        $this->assertTrue($form instanceof AbstractForm);
         $this->assertEquals("test", $form->getName());
     }
 
@@ -30,7 +33,7 @@ class TestFormBuilder extends \PHPUnit_Framework_TestCase
     {
         $builder = $this->createFormBuilder();
 
-        $form = $builder->create("test")->add("test", "test_field")->getForm();
+        $form = $builder->create("test")->add("test", new SomeTestField())->getForm();
 
 
         $this->assertTrue($form["test"] instanceof AbstractField);
@@ -40,7 +43,7 @@ class TestFormBuilder extends \PHPUnit_Framework_TestCase
     {
         $builder = $this->createFormBuilder();
 
-        $builder->create("test")->add("test", "test_field");
+        $builder->create("test")->add("test", new SomeTestField());
 
 
         $form = $builder->getForm();

@@ -1,20 +1,23 @@
 <?php
+/**
+ * Tests for a custom Form class
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
+ */
 namespace SimpleForm\Test;
 
-use SimpleForm\Config;
+use SimpleForm\AbstractForm;
 use SimpleForm\Field\AbstractField;
-use SimpleForm\Form;
 use SimpleForm\FormBuilder;
-use SimpleForm\Test\Mock\SomeFormTest;
+use SimpleForm\Test\Mock\SomeTestForm;
+use SimpleForm\Test\Mock\SomeTestField;
 use SimpleForm\Test\Mock\TestChoiceForm;
 
 class TestForm extends \PHPUnit_Framework_TestCase
 {
     public function createFormBuilder()
     {
-        $config = new Config();
-        $config->addFieldDefinition("test_field", "SimpleForm\\Test\\Mock\\SomeTestField");
-        return new FormBuilder($config);
+        return new FormBuilder();
     }
 
     public function testGetFormName()
@@ -24,7 +27,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
         $form = $builder->create("test")->getForm();
 
 
-        $this->assertTrue($form instanceof Form);
+        $this->assertTrue($form instanceof AbstractForm);
         $this->assertEquals("test", $form->getName());
     }
 
@@ -36,7 +39,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
         $fields = array("field1", "field2");
 
         foreach ($fields as $field) {
-            $builder->add($field, "test_field");
+            $builder->add($field,  new SomeTestField());
         }
 
 
@@ -51,7 +54,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
     {
         $builder = $this->createFormBuilder();
 
-        $form = $builder->create("test", array("need_a_value"=>"value"))->add("need_a_value", "test_field")->getForm();
+        $form = $builder->create("test", array("need_a_value"=>"value"))->add("need_a_value", new SomeTestField())->getForm();
 
         $this->assertEquals("value", $form->getValue("need_a_value"));
         $this->assertEquals("value", $form["need_a_value"]->getValue());
@@ -61,7 +64,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
 
     public function testFormClass()
     {
-        $form = new SomeFormTest(array("test_field"=>"value", "test_choice"=>"key_test"), $this->createFormBuilder());
+        $form = new SomeTestForm(array("test_field"=>"value", "test_choice"=>"key_test"), $this->createFormBuilder());
 
         $this->assertEquals("test_form", $form->getName());
         $this->assertEquals("value", $form->getValue("test_field"));
@@ -73,7 +76,7 @@ class TestForm extends \PHPUnit_Framework_TestCase
 
     public function testFormIsValid()
     {
-        $form = new SomeFormTest(array(), $this->createFormBuilder());
+        $form = new SomeTestForm(array(), $this->createFormBuilder());
 
         $form->bind(array("test_field"=>"value", "test_choice"=>"key_test"));
 

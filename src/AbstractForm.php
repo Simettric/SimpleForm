@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Base Form class.
+ *
+ * You need to extend it with your custom Form classes.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm;
@@ -101,7 +105,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess
 
     public function isValid()
     {
-        return $this->_has_errors == false;
+        return $this->_has_errors === false;
     }
 
 
@@ -169,7 +173,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess
 
     public function offsetSet($offset,  $value)
     {
-        //todo: exception
+        throw new \Exception('Setting fields with the array selector is not permitted');
     }
 
 

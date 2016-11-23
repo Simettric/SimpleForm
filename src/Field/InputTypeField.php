@@ -1,15 +1,18 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Input Form Field.
+ *
+ * It creates an input html tag, with the "type" that you configure in its options.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
-
 namespace SimpleForm\Field;
 
 class InputTypeField extends AbstractField
 {
-    protected function _configureHTMLAttributes()
+    protected function configureHTMLAttributes()
     {
-        parent::_configureHTMLAttributes();
+        parent::configureHTMLAttributes();
         unset($this->_html_attributes["type"]);
     }
 

@@ -1,6 +1,10 @@
 <?php
 /**
- * Created by Asier Marqués <asiermarques@gmail.com>
+ * The Base Form Field class.
+ *
+ * You need to extend it with your custom Form Fields.
+ *
+ * @author Asier Marqués <asiermarques@gmail.com>
  */
 
 namespace SimpleForm\Field;
@@ -22,15 +26,26 @@ abstract class AbstractField
     protected $_name;
     protected $_value;
 
-    public function __construct($name, $form_name, $options=array(), $validators=array())
+    public function __construct($options=array())
+    {
+
+        $this->_options    = $options;
+
+        if(isset($options["validators"]))
+        {
+            $this->_validators = $options["validators"];
+            unset($this->_options["validators"]);
+        }
+    }
+
+    public function configure($name, $form_name)
     {
         $this->_name       = $name;
         $this->_form_name  = $form_name;
-        $this->_options    = $options;
-        $this->_validators = $validators;
 
-        $this->_checkOptionsRequisites();
-        $this->_configureHTMLAttributes();
+
+        $this->checkOptionsRequisites();
+        $this->configureHTMLAttributes();
     }
 
 
@@ -59,15 +74,15 @@ abstract class AbstractField
      * Override this method in order to check the required options
      * @return bool
      */
-    protected function _checkOptionsRequisites()
+    protected function checkOptionsRequisites()
     {
         return true;
     }
 
 
-    protected function _configureHTMLAttributes()
+    protected function configureHTMLAttributes()
     {
-        unset($this->_options["validators"]);
+
 
         if (isset($this->_options["required"])) {
             if ($this->_options["required"]) {
