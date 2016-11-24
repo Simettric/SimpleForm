@@ -15,6 +15,9 @@
             <file>tests/TestChoiceField.php</file>
             <file>tests/TestFormBuilder.php</file>
             <file>tests/TestForm.php</file>
+            <file>tests/TestInputTypeField.php</file>
+            <file>tests/TestTextareaField.php</file>
+            <file>tests/TestTextField.php</file>
         </testsuite>
     </testsuites>
 
