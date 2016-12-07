@@ -17,9 +17,13 @@ class TestChoiceForm extends AbstractForm
     {
         $types     = array("Imagen"=> "image", "Audio"=>"audio");
 
-        $this->setName("content_info");
 
 
         $builder->add("type", new ChoiceField(array("choices"=>$types, "label"=>"Tipo de contenido", "class"=>"form-control")));
+    }
+
+    public function getName()
+    {
+        return 'test_form';
     }
 }

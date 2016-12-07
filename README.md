@@ -38,9 +38,9 @@ $form       = $builder->getForm($data_array);
 ```php
 class MessageForm extends AbstractForm{
 
-    function configure(FormBuilder $builder){
+    public function configure(FormBuilder $builder)
+    {
 
-        $this->name = "message";
 
         $builder->add("firstName")
                 ->add("lastName")
@@ -52,6 +52,12 @@ class MessageForm extends AbstractForm{
                                                      new StringLength(array("min"=>4))
                                          )))
 
+    }
+    
+    
+    public function getName()
+    {
+        return 'message';
     }
 
 
@@ -78,7 +84,7 @@ $builder->add("message", new TextareaField(array(
 In your controller, you can bind the request data and check if the form is valid
 
 ```php
-$form->bind( $_POST["contact"] );
+$form->bind( $_POST["message"] );
 
 if($form->isValid()){
 

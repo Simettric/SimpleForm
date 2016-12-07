@@ -29,8 +29,7 @@ class FormBuilder
     public function create($form, $values=array())
     {
         if (is_string($form)) {
-            $this->_form      = new FormBuilderForm($values, $this);
-            $this->_form->setName($form);
+            $this->_form      = new FormBuilderForm($form, $values, $this);
         } elseif ($form instanceof AbstractForm) {
             $this->_form      = $form;
         }

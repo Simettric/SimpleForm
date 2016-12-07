@@ -18,8 +18,6 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess
 
     protected $_has_errors = false;
 
-    protected $_name;
-
     protected $_data;
 
     /**
@@ -44,15 +42,7 @@ abstract class AbstractForm implements \Iterator, \ArrayAccess
     abstract public function configure(FormBuilder $builder);
 
 
-    public function setName($name)
-    {
-        $this->_name = $name;
-    }
-
-    public function getName()
-    {
-        return $this->_name;
-    }
+    public abstract function getName();
 
     /**
      * @return FormBuilder

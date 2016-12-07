@@ -14,11 +14,15 @@ class SomeTestForm extends \SimpleForm\AbstractForm
 {
     public function configure(FormBuilder $builder)
     {
-        $this->setName("test_form");
 
         $builder->add("test_field", new TextField(array()))
             ->add("test_choice", new ChoiceField(array(
                 "choices"=>array("Test"=>"key_test")
             )));
+    }
+
+    public function getName()
+    {
+        return 'test_form';
     }
 }
