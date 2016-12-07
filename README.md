@@ -108,6 +108,13 @@ Outputs:
 
 </div>
 ```
+*Note: you can return a null value in your Form::getName() method in order to set a clean input name like:
+```html   
+  <input type="text" name="firstName" required="required">
+```
+
+
+
 You can render each HTML tag individually:
 ```php    
 <?php echo $form["firstName"]->getLabelTag() ?>

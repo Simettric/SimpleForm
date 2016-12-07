@@ -97,7 +97,12 @@ abstract class AbstractField
         }
 
         $this->_html_attributes["id"]   = $this->_form_name . "_" . $this->_name;
-        $this->_html_attributes["name"] = $this->_form_name . "[" . $this->_name . "]";
+        if($this->_form_name)
+        {
+            $this->_html_attributes["name"] = $this->_form_name . "[" . $this->_name . "]";
+        }else{
+            $this->_html_attributes["name"] = $this->_name;
+        }
 
         foreach ($this->_options as $key=>$option) {
             $this->_html_attributes[$key] = $option;

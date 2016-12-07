@@ -12,6 +12,7 @@ use SimpleForm\FormBuilder;
 use SimpleForm\Test\Mock\SomeTestForm;
 use SimpleForm\Test\Mock\SomeTestField;
 use SimpleForm\Test\Mock\TestChoiceForm;
+use SimpleForm\Test\Mock\TestFormWithoutName;
 
 class TestForm extends \PHPUnit_Framework_TestCase
 {
@@ -70,9 +71,35 @@ class TestForm extends \PHPUnit_Framework_TestCase
         $this->assertEquals("value", $form->getValue("test_field"));
         $this->assertEquals("value", $form["test_field"]->getValue());
         $this->assertEquals("key_test", $form["test_choice"]->getValue());
+
+        /**
+         * @var $field AbstractField
+         */
+        $field = $form["test_field"];
+
+        $this->assertEquals("value", $field->getValue());
+        $attr = $field->getAttributes();
+        $this->assertTrue(false!==strpos($attr, 'name="test_form[test_field]"'));
     }
 
+    public function testFormWithoutNameClass()
+    {
+        $form = new TestFormWithoutName(array("test_field"=>"value", "test_choice"=>"key_test"), $this->createFormBuilder());
 
+        $this->assertEquals(null, $form->getName());
+        $this->assertEquals("value", $form->getValue("test_field"));
+
+        /**
+         * @var $field AbstractField
+         */
+        $field = $form["test_field"];
+
+        $this->assertEquals("value", $field->getValue());
+        $attr = $field->getAttributes();
+        $this->assertTrue(false!==strpos($attr, 'name="test_field"'));
+
+
+    }
 
     public function testFormIsValid()
     {
