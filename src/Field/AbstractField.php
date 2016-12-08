@@ -184,7 +184,12 @@ abstract class AbstractField
 
     public function __toString()
     {
-        return $this->getLabelTag() . $this->getInputTag() . $this->getErrorTag();
+        return $this->getRow();
+    }
+
+    public function getRow($label=null)
+    {
+        return $this->getLabelTag($label) . $this->getInputTag() . $this->getErrorTag();
     }
 
     public function getLabelTag($label=null)

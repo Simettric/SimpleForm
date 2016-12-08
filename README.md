@@ -112,6 +112,11 @@ Outputs:
 ```html   
   <input type="text" name="firstName" required="required">
 ```
+*Note2: using Field::getRow("label") method, the result is similar but with a custom label.
+```php
+<?php echo $form["firstName"]->getRow('Text for the label tag') ?>
+```
+
 
 
 
