@@ -220,6 +220,15 @@ abstract class AbstractField
 
         return null;
     }
+    
+    public function getInputTagWithAttributes(array $html_attr)
+    {
+        foreach($html_attr as $key=>$value)
+        {
+            $this->_html_attributes[$key] = $value;
+        }
+        return $this->getInputTag();
+    }
 
     abstract public function getInputTag();
 }
